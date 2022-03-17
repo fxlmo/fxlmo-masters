@@ -1,2 +1,5 @@
 .env
 tweets/*
+kaggle/archive*
+kaggle/processed-data/
+twitter-scraper/tweets/
