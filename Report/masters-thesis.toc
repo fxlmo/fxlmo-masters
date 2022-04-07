@@ -7,23 +7,25 @@
 \contentsline {section}{\numberline {2.2}Semantic Extraction via Screening and Topic Modelling}{3}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Generating the sample}{3}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Screening for sentiment charged words}{3}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}Portfolios and Financial Market Analysis}{3}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Portfolios}{3}{subsection.2.3.1}%
-\contentsline {subsubsection}{Creating a portfolio}{4}{section*.13}%
-\contentsline {subsubsection}{Fama French 3 and 5 Factor Models}{4}{section*.14}%
-\contentsline {subsubsection}{Sharpe Ratio}{4}{section*.15}%
-\contentsline {section}{\numberline {2.4}SHUT}{4}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Project Execution}{5}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Example Section}{5}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Example Sub-section}{6}{subsection.3.1.1}%
-\contentsline {subsubsection}{Example Sub-sub-section}{7}{section*.20}%
-\contentsline {paragraph}{Example paragraph.}{8}{section*.21}%
-\contentsline {chapter}{\numberline {4}Critical Evaluation}{9}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Unorganised Figures}{9}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Daily returns}{9}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Most impactful words}{9}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Speed of information Assimilation}{10}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Comparison to other methods}{10}{subsection.4.1.4}%
-\contentsline {section}{\numberline {4.2}What to do}{10}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Conclusion}{12}{chapter.5}%
-\contentsline {chapter}{\numberline {A}An Example Appendix}{14}{appendix.A}%
+\contentsline {subsection}{\numberline {2.2.3}Learning Sentiment Topics}{4}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Portfolios and Financial Market Analysis}{4}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Portfolios}{4}{subsection.2.3.1}%
+\contentsline {subsubsection}{Creating a portfolio}{4}{section*.12}%
+\contentsline {subsection}{\numberline {2.3.2}Evaluating a portfolio}{5}{subsection.2.3.2}%
+\contentsline {subsubsection}{Sharpe Ratio}{5}{section*.13}%
+\contentsline {subsubsection}{Fama French 3 and 5 Factor Models}{5}{section*.14}%
+\contentsline {section}{\numberline {2.4}What to do}{6}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Project Execution}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Example Section}{7}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Example Sub-section}{8}{subsection.3.1.1}%
+\contentsline {subsubsection}{Example Sub-sub-section}{9}{section*.19}%
+\contentsline {paragraph}{Example paragraph.}{10}{section*.20}%
+\contentsline {chapter}{\numberline {4}Critical Evaluation}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Unorganised Figures}{11}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Daily returns}{11}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Most impactful words}{11}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Speed of information Assimilation}{12}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Comparison to other methods}{12}{subsection.4.1.4}%
+\contentsline {section}{\numberline {4.2}What to do}{12}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Conclusion}{14}{chapter.5}%
+\contentsline {chapter}{\numberline {A}An Example Appendix}{16}{appendix.A}%

@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.9.27)  5 APR 2022 19:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.6)  7 APR 2022 16:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/josh/Documents/year-4/thesis/Report/masters-thesis.tex
-(/home/josh/Documents/year-4/thesis/Report/masters-thesis.tex
+**/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.tex
+(/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.tex
 LaTeX2e <2020-02-02> patch level 2
-L3 programming layer <2020-02-14> (/home/josh/Documents/year-4/thesis/Report/dissertation.cls
+L3 programming layer <2020-02-14> (/home/josh/Documents/year-4/thesis/code/Report/dissertation.cls
 Document Class: dissertation 2012/05/04, Daniel Page <Daniel.Page@bristol.ac.uk>
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
 \pgfkeys@pathtoks=\toks14
@@ -415,7 +415,7 @@ Package: xparse 2020-02-14 L3 Experimental document command parser
 Package: lipsum 2019/01/02 v2.2 150 paragraphs of Lorem Ipsum dummy text
  (/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex
 File: lipsum.ltd.tex 2019/01/02 v2.2 The Lorem ipsum dummy text
-)) (/home/josh/Documents/year-4/thesis/Report/dtklogos.sty
+)) (/home/josh/Documents/year-4/thesis/code/Report/dtklogos.sty
 Package: dtklogos 2014/11/15 v2.2 LaTeX wrapper for `hologo' (RN,HV)
  (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifpdf.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
@@ -476,7 +476,7 @@ Package caption Info: listings package is loaded.
 )
 \c@subfigure=\count323
 \c@subtable=\count324
-) (/home/josh/Documents/year-4/thesis/Report/masters-thesis.aux)
+) (/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.aux)
 \openout1 = `masters-thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
@@ -573,23 +573,13 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 34.
 LaTeX Info: Redefining \pageref on input line 34.
 LaTeX Info: Redefining \nameref on input line 34.
- (/home/josh/Documents/year-4/thesis/Report/masters-thesis.out) (/home/josh/Documents/year-4/thesis/Report/masters-thesis.out)
+ (/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.out) (/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.out)
 \@outlinefile=\write3
 \openout3 = `masters-thesis.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 60.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 60.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<logo/logo_uob_color.pdf, id=72, 546.04pt x 158.5925pt>
+<logo/logo_uob_color.pdf, id=60, 546.04pt x 158.5925pt>
 File: logo/logo_uob_color.pdf Graphic file (type pdf)
 <use logo/logo_uob_color.pdf>
 Package pdftex.def Info: logo/logo_uob_color.pdf  used on input line 70.
@@ -599,7 +589,16 @@ Overfull \hbox (64.40608pt too wide) in paragraph at lines 70--70
  [][] 
  []
 
-[2 </home/josh/Documents/year-4/thesis/Report/logo/logo_uob_color.pdf>] [1
+LaTeX Font Info:    Trying to load font information for U+msa on input line 70.
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 70.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </home/josh/Documents/year-4/thesis/code/Report/logo/logo_uob_color.pdf>] [1
 
 
 ] [2
@@ -608,19 +607,19 @@ Overfull \hbox (64.40608pt too wide) in paragraph at lines 70--70
 
 ] [4
 
-] (/home/josh/Documents/year-4/thesis/Report/masters-thesis.toc)
+] (/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.toc)
 \tf@toc=\write4
 \openout4 = `masters-thesis.toc'.
 
  [5
 
-] (/home/josh/Documents/year-4/thesis/Report/masters-thesis.lof)
+] (/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.lof)
 \tf@lof=\write5
 \openout5 = `masters-thesis.lof'.
 
  [6
 
-] (/home/josh/Documents/year-4/thesis/Report/masters-thesis.lot)
+] (/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.lot)
 \tf@lot=\write6
 \openout6 = `masters-thesis.lot'.
 
@@ -659,15 +658,11 @@ l.354 \chapter
 
 ]
 Chapter 2.
-pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.372 
-       [2
+[2
 
-] [3] [4]
+] [3] [4] [5] [6]
 Chapter 3.
-[5
+[7
 
 ] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2019/09/10 1.8c listings language file
@@ -675,58 +670,58 @@ File: lstlang1.sty 2019/09/10 1.8c listings language file
 File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
 )
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 527.
- [6] [7] [8]
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 579.
+ [8] [9] [10]
 Chapter 4.
-<pics/positive.png, id=231, 854.19125pt x 433.62pt>
+<pics/positive.png, id=241, 854.19125pt x 433.62pt>
 File: pics/positive.png Graphic file (type png)
 <use pics/positive.png>
-Package pdftex.def Info: pics/positive.png  used on input line 594.
+Package pdftex.def Info: pics/positive.png  used on input line 646.
 (pdftex.def)             Requested size: 341.67046pt x 173.44492pt.
-<pics/negative.png, id=233, 854.19125pt x 433.62pt>
+<pics/negative.png, id=243, 854.19125pt x 433.62pt>
 File: pics/negative.png Graphic file (type png)
 <use pics/negative.png>
-Package pdftex.def Info: pics/negative.png  used on input line 600.
+Package pdftex.def Info: pics/negative.png  used on input line 652.
 (pdftex.def)             Requested size: 341.67046pt x 173.44492pt.
-[9
+[11
 
-] [10 </home/josh/Documents/year-4/thesis/Report/pics/positive.png> </home/josh/Documents/year-4/thesis/Report/pics/negative.png>] [11]
+] [12 </home/josh/Documents/year-4/thesis/code/Report/pics/positive.png> </home/josh/Documents/year-4/thesis/code/Report/pics/negative.png>] [13]
 Chapter 5.
-[12
+[14
 
 ]
 
-Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is useless on input line 720.
+Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is useless on input line 772.
 
-(/home/josh/Documents/year-4/thesis/Report/masters-thesis.bbl) [13
+(/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.bbl) [15
 
 
 ]
 Appendix A.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 756.
-[14
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 808.
+[16
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 756.
- (/home/josh/Documents/year-4/thesis/Report/masters-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 756.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 756.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 808.
+ (/home/josh/Documents/year-4/thesis/code/Report/masters-thesis.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 808.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 808.
 Package rerunfilecheck Info: File `masters-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: A4AD0AF369FB9DDEF4BF52CDF39E028B;839.
+(rerunfilecheck)             Checksum: 80C49B846002CF65138EA488F78EF5F6;845.
  ) 
 Here is how much of TeX's memory you used:
- 14617 strings out of 481239
- 233628 string characters out of 5920377
- 810576 words of memory out of 5000000
+ 14623 strings out of 481239
+ 233830 string characters out of 5920377
+ 810600 words of memory out of 5000000
  29501 multiletter control sequences out of 15000+600000
  538944 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,12n,100p,1086b,1349s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,12n,100p,1279b,1349s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on /home/josh/Documents/year-4/thesis/Report/masters-thesis.pdf (27 pages, 599336 bytes).
+Output written on /home/josh/Documents/year-4/thesis/code/Report/masters-thesis.pdf (28 pages, 611303 bytes).
 PDF statistics:
- 354 PDF objects out of 1000 (max. 8388607)
- 300 compressed objects within 3 object streams
- 91 named destinations out of 1000 (max. 500000)
+ 365 PDF objects out of 1000 (max. 8388607)
+ 309 compressed objects within 4 object streams
+ 97 named destinations out of 1000 (max. 500000)
  128 words of extra memory for PDF output out of 10000 (max. 10000000)
 

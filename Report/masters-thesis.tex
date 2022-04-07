@@ -40,26 +40,26 @@
 % own dissertation: everything following it is in the correct order to use 
 % as is.
 
-\section*{Prelude}
-\thispagestyle{empty}
+% \section*{Prelude}
+% \thispagestyle{empty}
 
-A typical dissertation will be structured according to (somewhat) standard 
-sections, described in what follows.  However, it is hard and perhaps even 
-counter-productive to generalise: the goal is {\em not} to be prescriptive, 
-but simply to act as a guideline.  In particular, each page count given is
-important but {\em not} absolute: their aim is simply to highlight that a 
-clear, concise description is better than a rambling alternative that makes
-it hard to separate important content and facts from trivia.
+% A typical dissertation will be structured according to (somewhat) standard 
+% sections, described in what follows.  However, it is hard and perhaps even 
+% counter-productive to generalise: the goal is {\em not} to be prescriptive, 
+% but simply to act as a guideline.  In particular, each page count given is
+% important but {\em not} absolute: their aim is simply to highlight that a 
+% clear, concise description is better than a rambling alternative that makes
+% it hard to separate important content and facts from trivia.
 
-% You can use this document as a \LaTeX-based~\cite{latexbook1,latexbook2} 
-template for your own dissertation by simply deleting extraneous sections
-and content; keep in mind that the associated {\tt Makefile} could be of
-use. %, in particular because it automatically executes \mbox{\BibTeX} to 
-deal with the associated bibliography. 
-Alternatively, upload this template, dissertation.bib, dissertation.cls, 
-dtklogos.sty and the "logo" folder to Overleaf (an online \LaTeX editor and compiler) and work on your thesis there.
+% % You can use this document as a \LaTeX-based~\cite{latexbook1,latexbook2} 
+% template for your own dissertation by simply deleting extraneous sections
+% and content; keep in mind that the associated {\tt Makefile} could be of
+% use. %, in particular because it automatically executes \mbox{\BibTeX} to 
+% deal with the associated bibliography. 
+% Alternatively, upload this template, dissertation.bib, dissertation.cls, 
+% dtklogos.sty and the "logo" folder to Overleaf (an online \LaTeX editor and compiler) and work on your thesis there.
 
-\textbf{Do not include this section in your final dissertation --- just delete it from the source.}
+% \textbf{Do not include this section in your final dissertation --- just delete it from the source.}
 
 % =============================================================================
 
@@ -388,15 +388,39 @@ Semantic Extraction via Screening and topic model (SESTM) is a novel text mining
 
 
 \subsection{Screening for sentiment charged words}
-The first step in this algorithm is to screen for sentiment words in a collection of articles. Some notation will be introduced here to facilitate the discussion and explanation of the algorithm.
+The first step in this algorithm is to screen for sentiment words in a collection of articles, since sentiment neutral words are a nuidance and contribute to noise. This strategy isolates the sentiment charged words and uses these alone to calculate sentiment. This is achieved by using a supervised approach with the realised returns of an associated stock, since if a word appears in headlines that result in positive returns, it is reasonable to assume that the word carries positive sentiment. Some notation will be introduced here to facilitate the discussion and explanation of the algorithm.
 \begin{itemize}
       \item The sample is defined as $n$ articles producing a dictionary of $m$ words.
       \item The word count of article $i$ is recorded in vector $d_i$
       \item $D = [d_1, d_2, \dots, d_n]$ is an $m \times n$ document term matrix
-      \item The count of sentiment charged words in article $i$ is defined as $d_{[S],i}$.
+      \item The count of sentiment charged words in article $i$ is defined as the submatrix $d_{[S],i}$.
 \end{itemize}
 
-For a word $j$, we define $f_j$ as the fractional representation of the frequency a word
+For a word $j$, we define $f_j$ as the fractional representation of the frequency with which a word appears in a positively tagged article versus the frequency with which a word appears in any article:
+\begin{equation}
+f_j = \frac{\text{count of word } j \text{ in article with } sgn(y) = +1}{\text{count of word } j \text{ in all articles}}
+\end{equation}
+
+Here, $sgn$ is simply the sign of the difference in tagged returns of an article. If an article is released on day $t$ (specifically, between 4pm of day $t-1$ and 4pm of day $t$), the article is tagged with the returns of the associated firm from day $t-1$ to $t+1$ (specifically market close on day $t-2$ to close on day $t+1$). 
+
+Next, $f_j$ is compared against positive and negative threshold. We defined $\hat \pi$ to be the fraction of articles that have $sgn(y) = +1$, or articles that are tagged with positive returns. In practice, as the sample size increases, this value tends towards $0.5$. For sentiment neutral word, it is expected that $f_j \approx \hat \pi$ with some variance either side. Therefore, two thresholds are set $\alpha_+$ and $\alpha_-$. These thresholds are set such that any word with $f_j \ge \hat \pi + \alpha_+$ is determined to be sentiment positive, and the inverse for words such that $f_j \le \hat \pi - \alpha_-$. This filtering technique accepts words that are further away from the expected average sentiment, meaning only those words with extreme sentiment are included. To ensure that words appearing infrequently do not skew sentiment values significantly (for example a word appearing in exactly one article that is maximally positive ending up with $f_j = 1$), we introduce a third parameter $\kappa$, restricting words that appear in fewer than $\kappa$ headlines. The number of articles in which word $j$ appears is defined as $\kappa_j$ The set of sentiment charged words is therefore defined by:
+
+\begin{equation}
+S = \{j : f_j \ge \hat \pi + \alpha_+ \cup f_j \le \hat \pi - \alpha_- \} \cap  \{ j : k_j \ge \kappa \}
+\end{equation}
+
+The three parameters introduced here ($\alpha_+, \alpha_-, \kappa$) are tuned via cross-validation and the best configuration for each is selected.
+
+\subsection{Learning Sentiment Topics}
+With the wordlist $S$ calculated, we can now fit a two-topic model to each of the sentiment-charged counts. We introduce matrix $O = [O_+,O_-]$ that determines the expected probability of sentiment charged words in each article using a supervised learning approach. The teaching signal in this case is the realised stock returns of the associated firm for each headline.
+
+In the model, $p_i$ is the headline's sentiment score, described by:
+\begin{equation}
+p_i = \frac{\text{rank of } y_i \text{ in } \{y_l\}_{l=1}^n}{n}
+\end{equation}
+
+Where the return of a headline is represented by $y$, and headlines are ranked in ascending order (meaning an article with the highest returns would have $p_i$ of 1)
+
 
 \section{Portfolios and Financial Market Analysis}
 This project explores investing in portfolios and analyses the returns from the constructed portfolios. In this section, we introduce the concepts that will be utilised and discuss the motivations for using certain factors.
@@ -426,16 +450,44 @@ Once the portfolio has been constructed, the weighting for each stock must be co
 w_i = \frac{p_{i,t}}{\sum_{n}^1 p_{n,t}}
 \end{align*}
 
+\noindent
 The amount invested into stock $s_i$ would then be $w_i \times v$.
+
+Equal weighted stocks more closely resemble hedge funds, as well as being the case that smaller companies are able to more quickly encapsulate market share and investor interest. Equal weighted investments ensure a portfolio has a higher representation of smaller stocks, at the higher risk of the stock failing. Conversely, value weighted portfolios tend to be safer, as they prioritise larger companies that are more stable. The downside to utilising this method is that the large percentage increases observed in smaller stocks will have less effect, and therefore some profit can be lost.
 %TODO: inclue why you might want to use value weighted stocks
-
-\subsubsection{Fama French 3 and 5 Factor Models}
-
+\subsection{Evaluating a portfolio}
+To successfully determine the success of a portfolio, it is not always as simple as observing the profit alone. While this is a good indicator of the portential returns that could be gleaned from a given portfolio or investment method. The following methods are used to provide more insight into an investment method.
 
 \subsubsection{Sharpe Ratio}
+William Sharpe created the sharpe ratio in 1966 and is one of the most referenced comparison of risk versus return in finance. The formula for this ratio is exceedingly simple --- one of the key factors in its wide usage and is as follows:
+
+\begin{align*}
+S(x) = \frac{r_x - R_f}{\sigma(r_x)}
+\end{align*}
+
+\noindent
+where $x$ is the investment, $r_x$ is the average rate of return of $x$, $R_f$ is the risk free rate of return, and $\sigma{r_x}$ is the standard deviation of $r_x$. The risk free rate of return is simply the theoretical rate of return on an investment with absolutely no risk. Subtracting these risk free returns from the average rate of returns of $x$ yields the true rate of returns that introduced some risk.
+
+The value of an investment's Sharpe ratio measures the performance with adjustment for risk: the higher the ratio, the better the performance of the investment when adjusted for risk. For comparison methods, a ratio of 1 or higher is good, 2 or better is very good, and 3 or better is excellent. 
+
+\subsubsection{Fama French 3 and 5 Factor Models}
+Eugene Fama and Kenneth French co-authored a 1992 paper detailing risk factors in returns on both stocks and bonds. This extends the work Sharpe completed on the Sharpe ratio and goes further in exploring risk factors in returns, along with the capital asset pricing model (CAPM). CAPM is used for describing systematic risk and expected return, especially for that in stocks. The equation for this is:
+
+\begin{align*}
+ER_i = R_f + \beta_t (ER_m - R_f)
+\end{align*}
+
+\noindent
+where $ER_i$ is the expected return of the investment, $R_f$ is the risk free rate, $\beta_i$ is the beta of the investment and $ER_m - R_f$ is the market risk premium. The beta of an investment is the volatility compared to the rest of the market. It encompases the sensitivity of a stock to changes in the market. In essence, this gives the expected returns of an asset based on systematic risk. Building on this, Fama and French observed two additional risk factors: the size premium of an asset, or small minus big (SMB), and the value premium, or high minus low (HML). SMB is used to account for companies with small value stocks that generate high returns, while HML accommodates for stocks with equity that is valued cheaply compared to its book value that generate higher returns in comparison to the rest of the market. These factors are used in conjunction to provide the following formula for the Fama French 3 factor model (FF3 model):
+
+\begin{align*}
+ER_i = R_f + \beta_1(ER_m -R_f) + \beta_2 (SMB) + \beta_3(HML) + \alpha
+\end{align*}
+
+The values for SMB and HML are available from French's website, and can be collected for daily, monthly, or yearly returns. Computing this model on a series of returns from a portfolio gives useful information on the nature of the returns, since the model explains part of the returns. The values for the $\beta$s detail the exposure to exposure to each of the risk factors while the $\alpha$, or the intercept refers to the amount that a portfolio outperformed the model. This alpha is representative of the amount of private, or new, information that is utilised to construct the portfolio. This means that more simplistic methods of selecting portfolios will not have any private information and therefore the intercept will be much smaller than that of a more complicated model as simple methods have profits that can be explained by these risk factors.
 
 
-\section{SHUT}
+\section{What to do}
 \noindent
 This chapter is intended to describe the background on which execution of the project depends. This may be a technical or a contextual background, or both. The goal is to provide a detailed explanation of the specific problem at hand, and existing work that is relevant (e.g., an existing algorithm that you use, alternative solutions proposed, supporting technologies).  
 
