@@ -3,3 +3,12 @@ tweets/*
 kaggle/archive*
 kaggle/processed-data/
 twitter-scraper/tweets/
+*.zip
+*.toc
+*.synctex.gz
+*.log
+*.aux
+*.lof
+*.bbl
+*.blg
+*.out
