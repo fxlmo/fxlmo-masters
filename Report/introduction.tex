@@ -1,0 +1,54 @@
+
+\chapter{Introduction}
+\label{chap:context}
+\section{Motivation}
+\label{sec:motivation}
+Financial news is a widely available resource that offers crucial information on the health and status of the stock market and operating businesses. A huge volume of content is created each day, to such an extent that it is virtually impossible for manual methods to keep up with, leading to developments in automated analysis. With the growth of natural language processing techniques, it has become possible to observe a news article and extract the sentiment of an article; exploiting this information as an indicator of potential future movement of the stock market.
+
+An article is naturally formed of two parts, the headline and the article body. The headline itself is a unique text type, in that it is often not written by the author of the article, and serves as an attractor to a reader that encapsulates the story as a whole \cite{language-newspapers}. In attempting to fulfil this role, headlines have come to have a vocabulary that is alien from other vocabularies, and can sometimes be ambiguous or misleading in the attempt to draw a reader in to read the full article. The words chosen to be included in the headline therefore carry significant meaning, since they intend to convey a lot of information with far fewer words than other text types.
+
+When analysing the sentiment of an article, the body is usually used as input, since the bulk of the information conveyed by a given article is in the body. However, since headlines are a summarisation of the body, it is possible to mine information from the headline itself with as much success as the information collected from the body \cite{headline-sentiment}. The lower word counts of headlines mean processing the data is much quicker, as well as being easier to collect large quantites of headlines.
+
+With financial news outlets portraying the state of markets in such detail, the relationship between the words used in a news article and the effect on the stock market is one that can be utilised to predict future retunrs. In 2019, Ke et Al. \cite{sestm} proposed a novel text mining algorithm that observed previous articles, and their subsequent effect on associated firm share prices, and reteroactively assigned sentiment to words in each article, creating a probabilistic model that can be used to effectively predict future movement of stocks based on news articles on a given day. They state that the algorithm could be extended to use any text based data with some teaching signal, in their case news articles as the text data, and the realised return of the associated stock. Analysing headlines in a similar manner would be beneficial as the headline of an article are both more readily available and shorter, meaning shorter computation times.
+
+\newpage
+
+\section{Aims and Objectives}
+The aims and objectives for this project are the following:
+\begin{enumerate}
+\item Implement and optimise the algorithm proposed by \cite{sestm}
+\item Train a model based using a dataset of financial news headlines, with the associated stock returns as a teaching signal.
+\item Evaluate the predictive success of the trained model by creating portfolios according to predicted sentiment
+\item Compare the performance of the algorithm against other sentiment analysis techniques
+\end{enumerate}
+
+% \section{What to do}
+
+% \noindent
+% This chapter should introduce the project context and motivate each of the proposed aims and objectives.  Ideally, it is written at a fairly high-level, and easily understood by a reader who is technically competent but not an expert in the topic itself.
+
+% In short, the goal is to answer three questions for the reader.  First, what is the project topic, or problem being investigated?  Second, why is the topic important, or rather why should the reader care about it?  For example, why there is a need for this project (e.g., lack of similar software or deficiency in existing software), who will benefit from the project and in what way (e.g., end-users, or software developers) what work does the project build on and why is the selected approach either important and/or interesting (e.g., fills a gap in literature, applies results from another field to a new problem).  Finally, what are the central challenges involved and why are they significant? 
+ 
+% The chapter should conclude with a concise bullet point list that summarises the aims and objectives.  For example:
+
+% \begin{quote}
+% \noindent
+% The high-level objective of this project is to reduce the performance 
+% gap between hardware and software implementations of modular arithmetic.  
+% More specifically, the concrete aims are:
+
+% \begin{enumerate}
+% \item Research and survey literature on public-key cryptography and
+%       identify the state of the art in exponentiation algorithms.
+% \item Improve the state of the art algorithm so that it can be used
+%       in an effective and flexible way on constrained devices.
+% \item Implement a framework for describing exponentiation algorithms
+%       and populate it with suitable examples from the literature on 
+%       an ARM7 platform.
+% \item Use the framework to perform a study of algorithm performance
+%       in terms of time and space, and show the proposed improvements
+%       are worthwhile.
+% \end{enumerate}
+% \end{quote}
+
+% -----------------------------------------------------------------------------
