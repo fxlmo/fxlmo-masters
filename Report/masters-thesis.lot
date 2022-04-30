@@ -1,12 +1,18 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {english}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.1}{\ignorespaces Model configurations}}{14}{table.caption.14}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Model configurations (bigrams)}}{17}{table.caption.17}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Performance of Daily News Sentiment Portfolios one day ahead\relax }}{19}{table.caption.19}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Performance of Daily News Sentiment Portfolios day $t-1$ to day $t+1$\relax }}{20}{table.caption.20}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Performance of Daily News Sentiment Portfolios one day ahead\relax }}{20}{table.caption.19}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Performance of Daily News Sentiment Portfolios one day ahead, ignoring headlines dated after January 2020\relax }}{22}{table.caption.21}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Day ahead performance different configurations}}{22}{table.caption.22}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Performance of Daily News Sentiment Portfolios day $t-1$ to day $t+1$\relax }}{23}{table.caption.23}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {C.1}{\ignorespaces Sentiment word list for unigrams}}{27}{table.caption.23}%
+\contentsline {table}{\numberline {C.1}{\ignorespaces Sentiment word list for unigrams}}{30}{table.caption.26}%
+\contentsline {table}{\numberline {C.2}{\ignorespaces Sentiment word list for bigrams}}{31}{table.caption.27}%

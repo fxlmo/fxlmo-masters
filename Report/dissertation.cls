@@ -95,8 +95,7 @@
 
 % configure style of bibliography
 
-\bibliographystyle{apalike}
-
+% \bibliographystyle{apalike}
 % configure style of pages
 
 \geometry{a4paper,lmargin=2.5cm,rmargin=2.5cm,tmargin=2.5cm,bmargin=2.5cm}

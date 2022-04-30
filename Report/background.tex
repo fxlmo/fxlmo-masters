@@ -3,17 +3,30 @@
 
 We begin by discussing the technical background that relates to the work in the dissertation, to provide a foundation from which to build the rest of the project.
 
-\section{Semantic Analysis}
-Semantic analysis (also known as opinion mining) is the task of identifying opinions or sentiment of authors from an input of text. The implications of being able to programmatically extract the intended meaning of an input are extremely useful in a variety of fields and is particularly prudent in a financial context. The nuances of natural language can sometimes make this difficult to extract, and therefore significant research has been conducted on the topic over the course of the last decades.
+\section{Sentiment Analysis}
+Sentiment analysis (also known as opinion mining) is the task of identifying opinions or sentiment of authors from an input of text. The implications of being able to programmatically extract the intended meaning of an input are extremely useful in a variety of fields and is particularly prudent in a financial context. The nuances of natural language can sometimes make this difficult to extract, and therefore significant research has been conducted on the topic over the course of the last decades.
+
+The success or failure of any approach to this task can be summarised as the closeness of a prediction of sentiment to that calculated by a human. Take, for example, the following sentences:
+
+\begin{enumerate}
+\item \textit{`The movie was great'}
+\item \textit{`The movie was terrible'}
+\item \textit{`The acting was terrible, but the movie was great'}
+\end{enumerate}
+
+Sentences 1 and 2 have very simple sentiment: one is positive, and the other is negative. However, sentence 3 has slightly more complex sentiment. If the feature of interest is the movie, the word \textit{`terrible'} does not influence the sentiment of this feature, as it is used in reference to the acting, and more simple analysis methods may not pick up on such nuances in language.
+
+\subsection{Pre processing}
+The textual input to any sentiment analysis algorithm requires high quality preprocessing to ensure that the data is of the same format, and is one of the primary steps in any technique. Keeping noisy features such as stop words, or HTML tags serves to muddy the output. Instead, only features of interest should be considered in the ideal scenario \parencite{haddi2013preprocessing}. Insufficient data pre-processing can lead to underachieving analysis models, and as such the importance of this step should not be overlooked. Traditionally, this consists of online text cleaning (if necessary), removal of stop words and whitespace, and stemming and lemmatisation.
 
 \subsection{Lexicon Based Methods}
-The fundamental concept of sentiment analysis revolves around investigating a piece of text and deciding on a binary classification: positive or negative. The simplest method involves compiling a weighted word list, known as a lexicon. The weight of a word corresponds to the associated positivity or negativity of the word (for example `great' would have a high positivity, while `terrible' would have a very high negativity score). The overall sentiment of a piece of text could then be estimated by summing the individual positive sentiment scores of each word while subtracting the negative sentiment scores to yield an overall score for a piece of text. This lexicon is not limited to single words, and can be expanded to include $n$-grams (phrases of $n$ words), as the context in which a word is used can dramatically change its sentiment. This may increase the accuracy of the dictionary at the cost of increased dimensionality. The lexicon itself must be compiled before it is possible to utilise this method, and is normally constructed via in depth analysis of many texts. One of the most widely used for English text is the Harvard-IV-4 psychosociological lexicon (H4) which is a general usage model that can be used to estimate the sentiment of a piece of text.
+The fundamental concept of sentiment analysis revolves around investigating a piece of text and deciding on a binary classification: positive or negative. The simplest method involves compiling a weighted word list, known as a lexicon. The weight of a word corresponds to the associated positivity or negativity of the word (for example `great' would have a high positivity, while `terrible' would have a very high negativity score) \parencite{taboada2011lexicon}. The overall sentiment of a piece of text could then be estimated by summing the individual positive sentiment scores of each word while subtracting the negative sentiment scores to yield an overall score for a piece of text. This lexicon is not limited to single words, and can be expanded to include $n$-grams (phrases of $n$ words), as the context in which a word is used can dramatically change its sentiment. This may increase the accuracy of the dictionary at the cost of increased dimensionality. The lexicon itself must be compiled before it is possible to utilise this method, and is normally constructed via in depth analysis of many texts. An example of a lexicon used for English text is the Harvard-IV-4 psychosociological lexicon (H4) which is a general usage model that can be used to estimate the sentiment of a piece of text.
 
-There are many difficulties faced with creating a dictionary of this sort, as language is often a subjective entity, leading to conflicting opinions in assigning tone to a specific word. Furthermore, the context within which a word is used can drastically change the intended sentiment of a word, for example, the word `great' is naturally a very positive word, however, if used in a sarcastic manner (e.g. `It's so great that my flight is delayed!') the seniment conveyed can be inverted entirely. For this reason, simply summing the sentiment of a piece of text on a word by word level can give an incorrect estimate.
+Certain words that may have no meaning at all in one context, may have significant sentiment in another, particularly in the field of finance, where jargon dominates text. \textcite{lm-dict} conducted an investigation into the use of standard lexicons for use in analysing 10-K filing reports, which are comprehensive reports filed by companies about their financial performance. They discovered that almost 75\% of negative words found in the filings based on the H4N file were not typically negative in a financial context. For example, `liability' is a negatively charged word in a standard context, while it carries no tone at all in the context of the filings, or have strong links to certain industry specific sectors, rather than general links. Loughran and McDonald created their own lexicon based on these results called the Loughran McDonald dictionary that is created for the purpose of classifying 10-k filings. They find that there is a high misclassification rate when using these generic lexicons, proving lexicon based methods work far better if it is bespoke for the topic. 
 
-Certain words that may have no meaning at all in one context, may have significant sentiment in another, particularly in the field of finance, where jargon dominates text. Loughran and McDonald \cite{lm-dict} conducted an investigation into the use of standard lexicons for use in analysing 10-K filing reports, which are comprehensive reports filed by companies about their financial performance. They discovered that almost 75\% of negative words found in the filings based on the H4N file were not typically negative in a financial context. For example, `liability' is a negatively charged word in a standard context, while it carries no tone at all in the context of the filings, or have strong links to certain industry specific sectors, rather than general links. Loughran and McDonald created their own lexicon based on these results called the Loughran McDonald dictionary that is created for the purpose of classifying 10-k filings. They find that there is a high misclassification rate when using these generic lexicons, proving lexicon based methods work far better if it is bespoke for the topic. 
+There are many difficulties faced with creating a dictionary of this sort, as language is often a subjective entity, leading to conflicting opinions in assigning tone to a specific word. Furthermore, the context within which a word is used can drastically change the intended sentiment of a word, for example, the word `great' is naturally a very positive word, however, if used in a sarcastic manner (e.g. `It's so great that my flight is delayed!') the sentiment conveyed can be inverted entirely. For this reason, simply summing the sentiment of a piece of text on a word by word level can give an incorrect estimate. Additionally, sentiment analysis is extemely reliant on sufficiently labelled data, and lack of this data is a significant obstacle in the field \parencite{madhoushi2015sentiment}.
 
-\subsection{Usage}
+\subsubsection{Usage}
 Usage of these lexicons can vary greatly, with some simply summing the count of positive words and subtracting the count of negative words to end up with an overall word count leaning either positively or negatively. However, this is a very rudimentary method and can be augmented with more complex models. Loughran and McDonald themselves suggest using Term Frequency Inverse Document Frequency (TF-IDF) as a method to weight the word counts. TF-IDF is one of the most popular term weighting schemes, and it therefore makes sense to augment these strategies with this weighting.
 
 TF-IDF has two distinct parts, term frequency and inverse document frequency. Term frequency (TF) is the relative frequency of a term $t$ in a document $d$:
@@ -30,7 +43,7 @@ idf(t,D) = \log \frac{N}{|\{d \in D: t \in d\}|}
 \end{equation}
 
 \noindent
-where $N = |D|$ and $D = [d_1, d_2, \dots, d_n]$. Using these two components in conjuction, the final TF-IDF of a term is:
+where $N = |D|$ and $D = [d_1, d_2, \dots, d_n]$. Using these two components in conjunction, the final TF-IDF of a term is:
 
 \begin{equation}
 tfidf(t,d,D) = tf(t,d) \times idf(t,D)
@@ -39,17 +52,20 @@ tfidf(t,d,D) = tf(t,d) \times idf(t,D)
 \noindent
 This method is used to compensate for words appearing frequently. The TF controls the impact of high frequency words, ensuring that if a word has significantly higher frequency than other words, the impact does not grow out of control. Similarly, the IDF controls for the commonality of a word, in that if a word appears in a lot of the documents, the impact will be reduced as it is not rare.
 
-\section{Semantic Extraction via Screening and Topic Modelling}
-Semantic Extraction via Screening and topic model (SESTM) is a novel text mining algorithm that makes use of a teaching signal developed by Ke et Al. in 2019 \cite{sestm}. It utilises realised stock returns as a teaching signal to develop a model of sentiment words in maximally positive or negative arguments in order to predict the sentiment of out of sample articles.
+\subsection{Sentiment Assignation based on Previous Data}
+Lexicon based methods are simplistic and therefore there are many such approaches. However, a more advanced method of labelling words can lead to more accurate results. \textcite{tetlock2007content}, \textcite{tetlock2008quantifying}, and \textcite{lm-dict} all examine the market reaction to the tone of newspaper articles and 10-K filings, and concluded that such media evokes a market reaction relative to the number of positive, negative, and total words in a document. However, such approaches only consider a singular, consistent positive or negative value for each entry, and it is likely that some words are more impactful than others. \textcite{jegadeesh2013word} developed a new method that seeks to assign word weight based on previous market reactions to 10-K filings. This method is more flexible than the more rudimentary dictionary methods discussed earlier, and shows promise that such a method could be applied more generally.
 
-To begin, we assume that each headline has some sentiment score $p_i \in [0,1]$, with $p_i = 1$ being a headline with maximum positive sentiment, and $p_i = 0$ maximally negative. Our problem is ot model the distribution of returns of a headline $y_i$ given the sentiment of the headline $p_i$. Thus we have assumed:
+\section{Sentiment Extraction via Screening and Topic Modelling}
+Sentiment Extraction via Screening and topic model (SESTM) is a novel text mining algorithm that makes use of a teaching signal developed by \textcite{sestm}. It is based on a similar method proposed by \textcite{jegadeesh2013word}, utilising realised stock returns as a teaching signal to develop a model of sentiment words in maximally positive or negative arguments in order to predict the sentiment of out of sample articles.
+
+To begin, we assume that each headline has some sentiment score $p_i \in [0,1]$, with $p_i = 1$ being a headline with maximum positive sentiment, and $p_i = 0$ maximally negative. Our challenge is to model the distribution of returns of a headline $y_i$ given the sentiment of the headline $p_i$. Thus we have assumed:
 
 \begin{equation}
 \mathbb{P}(\text{sgn}(y_i) = 1) = g(p_i) \text{, for a monotone increasing function } g(\cdot)
 \end{equation}
 
 \noindent
-where sgn($x$) returns $1$ if $x > 0$ and $-1$ otherwise. This assumption simply states that the higher the sentiment score, the higher the probability the headline has of returning positive returns.
+where sgn($x$) returns $1$ if $x > 0$ and $-1$ otherwise. This assumption simply states that as sentiment score increases, the probability a headline has of returning positive returns also increases.
 
 Next, we observe the distribution of word counts in an article. We assume a vocabulary has partition
 
@@ -60,7 +76,7 @@ Next, we observe the distribution of word counts in an article. We assume a voca
 \noindent
 where $S$ is the set of sentiment charged words and $N$ is the set of sentiment neutral words. Thus, the distribution of sentiment charged words are the vector $d_{[S],i}$, similarly for sentiment neutral words $d_{[N],i}$, although sentiment neutral words serve as useless noise and remain unmodelled.
 
-Utilising the work of Hoffman, we adapt latent semantic analysis (LSA) which is a technique that maps high-dimensional word count vectors to a lower dimensional representation (in our case, the realised returns) \cite{lsa}. We then assume that the vector of sentiment charged word counts are generated by a mixture multinomial model of form
+Utilising the work of Hoffman, we adapt latent sentiment analysis (LSA) which is a technique that maps high-dimensional word count vectors to a lower dimensional representation (in our case, the realised returns) \parencite{lsa}. We then assume that the vector of sentiment charged word counts are generated by a mixture multinomial model of form
 
 \begin{equation}
 d_{[S],i} \sim \text{Multinomial}(s_i, p_iO_+ + (1-p_i)O_-)
@@ -95,7 +111,7 @@ f_j = \frac{\text{count of word } j \text{ in article with } sgn(y) = +1}{\text{
 \noindent
 Here, $sgn$ is simply the sign of the difference in tagged returns of an article. If an article is released on day $t$ (specifically, between 4pm of day $t-1$ and 4pm of day $t$), the article is tagged with the returns of the associated firm from day $t-1$ to $t+1$ (specifically market close on day $t-2$ to close on day $t+1$). Naturally, higher values of $f_j$ indicate that word $j$ appears in a higher proportion of positively tagged articles.
 
-Next, $f_j$ is compared against positive and negative threshold. We define $\hat \pi$ to be the fraction of articles that have $sgn(y) = +1$, or articles that are tagged with positive returns. In practice, as the sample size increases, $\hat \pi$ tends towards $0.5$. For sentiment neutral words, it is expected that $f_j \approx \hat \pi$ with some variance either side. Therefore, two thresholds are set: $\alpha_+$ and $\alpha_-$. These thresholds are set such that any word with $f_j \ge \hat \pi + \alpha_+$ is determined to be sentiment positive, and the inverse for words such that $f_j \le \hat \pi - \alpha_-$. This filtering technique accepts words that are further away from the expected average sentiment, meaning only those words with extreme sentiment are included. To ensure that words appearing infrequently do not skew sentiment values significantly (for example a word appearing in exactly one article that is maximally positive ending up with $f_j = 1$), we introduce a third parameter $\kappa$, restricting words that appear in fewer than $\kappa$ headlines. The number of articles in which word $j$ appears is defined as $k_j$ The set of sentiment charged words is therefore defined by:
+Next, $f_j$ is compared against positive and negative threshold. We define $\hat \pi$ to be the fraction of articles that have $sgn(y) = +1$, or articles that are tagged with positive returns. In practice, as the sample size increases, $\hat \pi$ tends towards $0.5$. For sentiment neutral words, it is expected that $f_j \approx \hat \pi$ with some variance either side. Therefore, two thresholds are set: $\alpha_+$ and $\alpha_-$. These thresholds are set such that any word with $f_j \ge \hat \pi + \alpha_+$ is determined to be sentiment positive, and the inverse for words such that $f_j \le \hat \pi - \alpha_-$. This filtering technique accepts words that are further away from the expected average sentiment, meaning only those words with extreme sentiment are included. To ensure that words appearing infrequently do not skew sentiment values significantly (for example a word appearing in exactly one article that is maximally positive ending up with $f_j = 1$), we introduce a third parameter $\kappa$, restricting words that appear in fewer than $\kappa$ headlines. The number of articles in which word $j$ appears is defined as $k_j$. The set of sentiment charged words is therefore defined by:
 
 \begin{equation}
 S = \{j : f_j \ge \hat \pi + \alpha_+ \cup f_j \le \hat \pi - \alpha_- \} \cap  \{ j : k_j \ge \kappa \}
@@ -156,7 +172,15 @@ O = [h_1, h_2,\dots, h_n] W' (W W')^{-1}, \quad \text{ where } W = \begin{bmatri
 Finally, $O$ may have negative entries, so we set these to zero and normalise each column to have $\ell^1$-norm. The resulting matrix is referred to as $O$ to simplify notation.
 
 \subsection{Scoring New Headlines}
-\label{new-headlines}
+\label{sub:new-headlines}
+
+\begin{figure}[!t]
+    \begin{center}
+        \includegraphics[scale=.75]{./pics/lam-effect.png}
+        \caption[Effect of $\lambda$]{Effect of different values of $\lambda$ on estimated $p$ value. The large point on each line is the maximum value, and reflects the returned estimated $p$ of a headline}
+        \label{fig:lam-effect}
+    \end{center}
+\end{figure}
 
 The previous steps give estimators $S$ and $O$. Using these, we are able to estimate the sentiment score $p$ for a new article that is not in the training sample. Using model \ref{multinom}, we estimate $p$ using Maximum Likelihood Estimation. This is simply testing values in some range and determining which value gives the maximum output. We also include penalty term $\lambda \log(p(1-p))$ and finish with the following optimisation:
 
@@ -167,18 +191,8 @@ The previous steps give estimators $S$ and $O$. Using these, we are able to esti
 \noindent
 where $\widehat s$ is the total count of word from $S$ in the new article, $d_j, O_{+,j}, O_{-,j}$ are the entries for word $j$ in the corresponding vectors and $\lambda$ is a tuning parameter that ensures that the majority of headlines are neutral by pushing the estimate towards a neutral sentiment score of 0.5. The effect of lambda is shown in figure \ref{fig:lam-effect}
 
-\begin{figure}[!t]
-    \begin{center}
-        \includegraphics[scale=.75]{./pics/lam-effect.png}
-        \caption[Effect of $\lambda$]{Effect of different values of $\lambda$ on estimated $p$ value. The large point on each line is the maximum value, and reflects the returned estimated $p$ of a headline}
-        \label{fig:lam-effect}
-    \end{center}
-\end{figure}
 
-\section{Financial Markets and Stock Exchanges}
-A stock exchange is a platform from which buyers can connect with stock sellers. Stocks are traded in a number of exchanges including the New York Stock exchange and Nasdaq. The word stock itself means ownership or equity in a corporation, and indicates a share of ownership in a firm \cite{stock-market}. Each firm has its own stock ticker that uniquely identifies it in the market (e.g. Amazon's stock ticker is AMZN).
-
-The stock exchange is only active on certain days and for specific times. The time that an exchange opens varies on the exchange, but the majority of exchanges open at 9:30 a.m. and close at 4.00 p.m, excluding half days, where the market closes at 1:00 p.m. Furthermore, the markets are shut on weekends and 9 trading holidays during which no trading is able to take place \cite{stock-opening-hours}. Of course, the opening and closing times depend are in the local time for each market, and for American based exchanges, this is in Eastern Standard Time (EST).
+% \section{Financial Markets and Stock Exchanges}
 
 
 \section{Portfolios and Financial Market Analysis}
@@ -204,9 +218,9 @@ Similarly, for short returns, as the stock is being sold, profit is acquired if 
 \end{equation}
 
 \noindent
-Of course, these simple formulae negect transaction fees that can apply when constructing real portfolios. However, as we are creating portfolios in a theoretical sense, this suits our needs.
+Of course, these simple formulae neglect transaction fees that can apply when constructing real portfolios. However, as we are creating portfolios in a theoretical sense, this suits our needs.
 
-Once the portfolio has been constructed, the weighting for each stock must be considered. Each portfolio will have a value, which is the amount of money invested into it, and each stock will in turn get an investment that is a percentage of this overall value. There are two strategies that we will consider: equal weighted and value weighted strategies. Equal weighted is very simple: if a portfolio is comprised of $n$ stocks and has some investment $v$, each stock has $v/n$ invested into it. This strategy glosses over differences in stock size or price. On the other hand, value weighted portfolios assign much more money to stocks with higher value associated to them. This can be calculated in a number of ways, but the way we calculate this is if stock $s_i$ in portfolio $P = [s_1, ..., s_n]$ has market value $P_{i,t}$ at time $t$, the weight of stock $s_i$ would be:
+Once the portfolio has been constructed, the weighting for each stock must be considered. Each portfolio will have a value, which is the amount of money invested into it, and each stock will in turn get an investment that is a percentage of this overall value. There are two strategies that we will consider: equal weighted and value weighted strategies. Equal weighted is very simple: if a portfolio is comprised of $n$ stocks and has some investment $v$, each stock has $v/n$ invested into it. This strategy glosses over differences in stock size or price. On the other hand, value weighted portfolios assign much more money to stocks with higher value associated to them. This can be calculated in a number of ways, but the way we calculate this is if stock $s_i$ in portfolio $P = [s_1, \dots, s_n]$ has market value $P_{i,t}$ at time $t$, the weight of stock $s_i$ would be:
 
 \begin{equation}
 w_{i,t} = \frac{P_{i,t}}{\sum_{n}^1 P_{n,t}}
@@ -221,7 +235,8 @@ Equal weighted stocks more closely resemble hedge funds, as well as being the ca
 To successfully determine the success of a portfolio, it is not always as simple as observing the profit alone. While this is a good indicator of the potential returns that could be gleaned from a given portfolio or investment method, it is important to consider external factors and risks that may be involved. The following methods are used to provide more insight into an investment method.
 
 \subsubsection{Sharpe Ratio}
-William Sharpe created the sharpe ratio in 1966 and is one of the most referenced comparison of risk versus return in finance \cite{sharpe-ratio}. The formula for this ratio is exceedingly simple --- one of the key factors in its wide usage --- and is as follows:
+\label{ssub:sharpe-ratio}
+William Sharpe created the sharpe ratio in 1966 and is one of the most referenced comparison of risk versus return in finance \parencite{sharpe-ratio}. The formula for this ratio is exceedingly simple --- one of the key factors in its wide usage --- and is as follows:
 
 \begin{align*}
 S(x) = \frac{r_x - R_f}{\sigma(r_x)}
@@ -233,22 +248,23 @@ where $x$ is the investment, $r_x$ is the average rate of return of $x$, $R_f$ i
 The value of an investment's Sharpe ratio measures the performance with adjustment for risk: the higher the ratio, the better the performance of the investment when adjusted for risk. As a reference, a ratio of 1 or higher is good, 2 or better is very good, and 3 or better is excellent. 
 
 \subsubsection{Fama French 3 and 5 Factor Models}
-Eugene Fama and Kenneth French co-authored a 1992 paper detailing risk factors in returns on both stocks and bonds. This extends the work Sharpe completed on the Sharpe ratio and goes further in exploring risk factors in returns, along with the capital asset pricing model (CAPM) \cite{ff3}. CAPM is used for describing systematic risk and expected return, especially for that in stocks. The equation for this is:
+\label{ssub:fama-french}
+Eugene Fama and Kenneth French co-authored a 1992 paper detailing risk factors in returns on both stocks and bonds. This extends the work Sharpe completed on the Sharpe ratio and goes further in exploring risk factors in returns, along with the capital asset pricing model (CAPM) \parencite{ff3}. CAPM is used for describing systematic risk and expected return, especially for that in stocks. The equation for this is:
 
 \begin{equation}
 ER_i = R_f + \beta_t (ER_m - R_f)
 \end{equation}
 
 \noindent
-where $ER_i$ is the expected return of the investment, $R_f$ is the risk free rate, $\beta_i$ is the beta of the investment and $ER_m - R_f$ is the market risk premium. The beta of an investment is the volatility compared to the rest of the market. It encompases the sensitivity of a stock to changes in the market. In essence, this gives the expected returns of an asset based on systematic risk. Building on this, Fama and French observed two additional risk factors: the size premium of an asset, or small minus big (SMB), and the value premium, or high minus low (HML). SMB is used to account for companies with small value stocks that generate high returns, while HML accommodates for stocks with equity that is valued cheaply compared to its book value that generate higher returns in comparison to the rest of the market. These factors are used in conjunction to provide the following formula for the Fama French 3 factor model (FF3 model):
+where $ER_i$ is the expected return of the investment, $R_f$ is the risk free rate, $\beta_i$ is the beta of the investment and $ER_m - R_f$ is the market risk premium. The beta of an investment is the volatility compared to the rest of the market. It encompasses the sensitivity of a stock to changes in the market. In essence, this gives the expected returns of an asset based on systematic risk. Building on this, Fama and French observed two additional risk factors: the size premium of an asset, or small minus big (SMB), and the value premium, or high minus low (HML). SMB is used to account for companies with small value stocks that generate high returns, while HML accommodates for stocks with equity that is valued cheaply compared to its book value that generate higher returns in comparison to the rest of the market. These factors are used in conjunction to provide the following formula for the Fama French 3 factor model (FF3 model):
 
 \begin{align*}
 ER_i = R_f + \beta_1(ER_m -R_f) + \beta_2 (SMB) + \beta_3(HML) + \alpha
 \end{align*}
 
-The values for SMB and HML are available from French's website \cite{french_2022}, and can be collected for daily, monthly, or yearly returns. Computing this model on a series of returns from a portfolio gives useful information on the nature of the returns, since the model explains part of the returns. The values for the $\beta$s detail the exposure to exposure to each of the risk factors while the $\alpha$, or the intercept, refers to the amount that a portfolio outperformed the expectations of the FF3 model. This alpha is representative of the amount of private or new information that is external from the market and is utilised to construct the portfolio. This means that more simplistic methods of selecting portfolios will not have any private information and therefore the intercept will be much close to zero while a more complicated model will have a larger intercept as simple methods have profits that can be explained by these risk factors.
+The values for SMB and HML are available from French's website \parencite{french_2022}, and can be collected for daily, monthly, or yearly returns. Computing this model on a series of returns from a portfolio gives useful information on the nature of the returns, since the model explains part of the returns. The values for the $\beta$s detail the exposure to exposure to each of the risk factors while the $\alpha$, or the intercept, refers to the amount that a portfolio outperformed the expectations of the FF3 model. This alpha is representative of the amount of private or new information that is external from the market and is utilised to construct the portfolio. This means that more simplistic methods of selecting portfolios will not have any private information and therefore the intercept will be much close to zero while a more complicated model will have a larger intercept as simple methods have profits that can be explained by these risk factors.
 
-This model was then revisted by Fama and French in 2015 where they observed two additional factors: robust minus weak (RMW) and conservative minus aggressive (CMA) \cite{ff5}. RMW corresponds to the profitability of an asset, in that it is the difference between returns of robust or high and weak or low operating profitability. CMA corresponds to the investment factor, and is the difference between returns of conservatively investing firms versus aggressively investing firms, giving the updated formula:
+This model was then revisited by Fama and French in 2015 where they observed two additional factors: robust minus weak (RMW) and conservative minus aggressive (CMA) \parencite{ff5}. RMW corresponds to the profitability of an asset, in that it is the difference between returns of robust or high and weak or low operating profitability. CMA corresponds to the investment factor, and is the difference between returns of conservatively investing firms versus aggressively investing firms, giving the updated formula:
 
 \begin{equation}
 ER_i = R_f + \beta_1(ER_m -R_f) + \beta_2 (SMB) + \beta_3(HML) + \beta_4(RMW) + \beta_5(CMA) + \alpha

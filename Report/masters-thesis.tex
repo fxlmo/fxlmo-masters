@@ -19,24 +19,35 @@
 % - year              should be formatted as a 4-digit year of submission
 %   (so 2014 rather than the academic year, say 2013/14 say).
 
-\documentclass[ oneside,tikz,% the name of the author
+\documentclass[ oneside,% the name of the author
                     author={Joshua Felmeden},
                 % the degree programme: BSc, MEng, MSci or MSc.
                     degree={MEng},
                 % the dissertation    title (which cannot be blank)
-                     title={Semantic Analysis of Financial Headlines Based on Realised Stock Returns},
+                     title={Sentiment Analysis of Financial Headlines Based on Realised Stock Returns},
                 % the dissertation subtitle (which can    be blank)
                   subtitle={Research}]{dissertation}
 
+\usepackage[%
+  backend=biber,
+  style=authoryear-ibid,
+  natbib=true
+]{biblatex}
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{hyperref}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
 \usepackage{siunitx}
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[english]{babel}
+\usepackage{url}
+\addbibresource{bibliography.bib}
 
 \definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
 \definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
@@ -401,7 +412,8 @@ $\hat x$          &:    &    Expected value of variable $x$ \\
 
 \backmatter
 
-\bibliography{dissertation}
+% \bibliography{dissertation}
+\printbibliography
 
 % -----------------------------------------------------------------------------
 
@@ -438,8 +450,8 @@ in an appendix if they think the description in the main dissertation is ambiguo
 \chapter{List of Optimisations}
 
 \chapter{Word and Phrase lists}
-\begin{table}
-      
+\begin{table}[!ht]
+\centering
 \begin{tabular}{lcccclcccc}
 \multicolumn{5}{c}{\textbf{Positive}} & \multicolumn{5}{c}{\textbf{Negative}} \\
 \cmidrule(lr){1-5}
@@ -500,5 +512,70 @@ surge & 0.000343 & 7 & 0 & 1 & loan & -5.1e-05 & 8 & 0 & 0 \\
 \bottomrule
 \end{tabular}
 \caption[Sentiment word list for unigrams]{Top sentiment words for each polarity, along with appearance in either Loughran McDonald dictionary (LM) or Harvard IV psychological dictionary (H4). Note sentiment in this case refers to average \textit{tone} over all 20 training windows. Words are first sorted via count of training windows appeared in, and then by sentiment}
+\end{table}
+
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lcccclcccc}
+\multicolumn{5}{c}{\textbf{Positive}} & \multicolumn{5}{c}{\textbf{Negative}} \\
+\cmidrule(lr){1-5}
+\cmidrule(lr){6-10}
+Word & Sentiment & Count & LM & H4 & Word & Sentiment & Count & LM & H4 \\
+\cmidrule(lr){1-5}
+\cmidrule(lr){6-10}
+week high & 0.023589 & 19 & 0 & 0 & downgrade & -0.023946 & 19 & 1 & 0 \\
+volume mover & 0.018901 & 19 & 0 & 0 & loser & -0.016851 & 19 & 0 & 1 \\
+upgrade & 0.016795 & 19 & 0 & 1 & lower & -0.016773 & 19 & 0 & 0 \\
+gainer & 0.013524 & 19 & 0 & 0 & public offer & -0.007176 & 19 & 0 & 0 \\
+high & 0.010034 & 19 & 0 & 0 & fall & -0.004345 & 19 & 0 & 0 \\
+mover & 0.007526 & 19 & 0 & 0 & cut & -0.003035 & 19 & 1 & 0 \\
+rais & 0.011851 & 18 & 0 & 0 & miss & -0.001481 & 19 & 1 & 0 \\
+repurchase & 0.000298 & 17 & 0 & 0 & weak & -0.001191 & 19 & 1 & 0 \\
+spike higher & 0.011535 & 16 & 0 & 0 & underweight & -0.000751 & 19 & 0 & 0 \\
+volume & 0.002742 & 16 & 0 & 0 & low & -0.005291 & 17 & 0 & 0 \\
+rumor & 0.00078 & 16 & 0 & 0 & public & -0.000609 & 17 & 0 & 0 \\
+author & 6.8e-05 & 16 & 0 & 0 & neutral & -0.003327 & 16 & 0 & 0 \\
+higher & 0.006567 & 15 & 0 & 0 & offer & -0.002486 & 16 & 0 & 0 \\
+outperform & 0.002857 & 15 & 1 & 0 & negative & -0.000794 & 16 & 1 & 1 \\
+spike & 0.002189 & 15 & 0 & 0 & offer common & -0.003422 & 15 & 0 & 0 \\
+solid & 0.000432 & 15 & 0 & 0 & disappoint & -0.000759 & 15 & 1 & 0 \\
+buy & 0.008344 & 14 & 0 & 0 & common & -0.000731 & 15 & 0 & 0 \\
+green & 0.000711 & 14 & 0 & 0 & concern & -0.000485 & 15 & 1 & 0 \\
+micron technology & 0.001827 & 13 & 0 & 0 & week low & -0.019854 & 14 & 0 & 0 \\
+overweight & 0.001675 & 13 & 0 & 0 & resume trade & -0.003218 & 14 & 0 & 0 \\
+soar & 0.001171 & 13 & 0 & 0 & secondary offer & -0.002503 & 14 & 0 & 0 \\
+strong & 0.000545 & 13 & 1 & 0 & loss & -0.000699 & 14 & 1 & 1 \\
+repurchase program & 6e-05 & 13 & 0 & 0 & remove & -0.000593 & 14 & 0 & 0 \\
+move higher & 0.003403 & 12 & 0 & 0 & impact & -0.000458 & 14 & 0 & 0 \\
+lift & 0.000659 & 12 & 0 & 0 & sector perform & -0.002324 & 13 & 0 & 0 \\
+tender offer & 0.000494 & 12 & 0 & 0 & bed bath & -0.001656 & 13 & 0 & 0 \\
+top gainer & 0.0146 & 11 & 0 & 0 & bath beyond & -0.001649 & 13 & 0 & 0 \\
+time warner & 0.003665 & 11 & 0 & 0 & general dynamic & -0.001225 & 13 & 0 & 0 \\
+urban outfitter & 0.002973 & 11 & 0 & 0 & tumble & -0.000678 & 13 & 0 & 0 \\
+western union & 0.00197 & 11 & 0 & 0 & resign & -0.000534 & 13 & 1 & 0 \\
+jump & 0.000856 & 11 & 0 & 0 & dip & -0.000478 & 13 & 0 & 0 \\
+standpoint research & 0.000432 & 11 & 0 & 0 & worst perform & -0.01493 & 12 & 0 & 0 \\
+special & 0.000154 & 11 & 0 & 1 & drop & -0.00074 & 12 & 0 & 0 \\
+strength & 0.000147 & 11 & 1 & 0 & resume & -0.000661 & 12 & 0 & 0 \\
+mention & 9.7e-05 & 11 & 0 & 0 & mix security & -0.000536 & 12 & 0 & 0 \\
+alert call & 0.001606 & 10 & 0 & 0 & pressure & -0.000469 & 12 & 0 & 0 \\
+marvel technology & 0.000905 & 10 & 0 & 0 & shelf & -0.00027 & 12 & 0 & 0 \\
+chatter & 0.000873 & 10 & 0 & 0 & security shelf & -0.000228 & 12 & 0 & 0 \\
+stake & 0.000815 & 10 & 0 & 0 & boston scientific & -0.003506 & 11 & 0 & 0 \\
+jobless claim & 0.000489 & 10 & 0 & 0 & worst & -0.002948 & 11 & 1 & 1 \\
+narrow & 0.000471 & 10 & 0 & 0 & sell & -0.000961 & 11 & 0 & 0 \\
+pop & 0.000359 & 10 & 0 & 0 & secondary & -0.000194 & 11 & 0 & 0 \\
+boost & 0.000324 & 10 & 1 & 0 & first solar & -0.009475 & 10 & 0 & 0 \\
+dish network & 0.000207 & 10 & 0 & 0 & hold remove & -0.0027 & 10 & 0 & 0 \\
+dynamic & 5.2e-05 & 10 & 0 & 1 & finish line & -0.001732 & 10 & 0 & 0 \\
+western digit & 0.003229 & 9 & 0 & 0 & cliff natural & -0.001449 & 10 & 0 & 0 \\
+alto network & 0.002602 & 9 & 0 & 0 & adobe & -0.001185 & 10 & 0 & 0 \\
+office depot & 0.000438 & 9 & 0 & 0 & perform & -0.001148 & 10 & 0 & 0 \\
+special dividend & 0.000385 & 9 & 0 & 0 & miss estimate & -0.00089 & 10 & 0 & 0 \\
+expansion & 0.000243 & 9 & 0 & 0 & fitch & -0.000813 & 10 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\caption[Sentiment word list for bigrams]{Top sentiment words including bigrams for each polarity, along with appearance in either Loughran McDonald dictionary (LM) or Harvard IV psychological dictionary (H4). Note sentiment in this case refers to average \textit{tone} over all 20 training windows. Words are first sorted via count of training windows appeared in, and then by sentiment}
 \end{table}
 \end{document}

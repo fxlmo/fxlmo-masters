@@ -11,17 +11,18 @@
 %       \item Discuss pre processing the data
 %       \item Discuss the kaggle sample
 % \end{itemize}
-In this section, we present the execution of the project, giving an overview of the dataset used, the configurations of hyperparameters and programming completed. The main idea of the project is to gather a dataset of headlines over a given time period and implement and analyse the algorithm presented by Ke et al. in their 2019 paper \cite{sestm}. Due to the difference in language used in headlines compared to that used in headlines, slightly different approaches were considered for some of the steps, but the theory behind the model remains unchanged.
+In this section, we present the execution of the project, giving an overview of the dataset used, the configurations of hyperparameters and programming completed. The main idea of the project is to gather a dataset of headlines over a given time period and implement and analyse the algorithm presented by Ke et al. in their 2019 paper \parencite{sestm}. Due to the difference in language used in headlines compared to that used in headlines, slightly different approaches were considered for some of the steps, but the theory behind the model remains unchanged.
 
 \section{Project Components}
-For this project, I opted to use Jupyter notebook as a base on which to implement the data processing, model training and validation, and portfolio formation. The modular nature of Jupyter, combined with Python's wide range of useful libraries facilitated the creation of this model. Creating each section as an independent cell allows for rigorous debugging and testing of each individual part, which would otherwise be extremely time consuming to test. The full notebook along with accompanying datasets can be found on GitHub \cite{github}.
+For this project, I opted to use Jupyter notebook as a base on which to implement the data processing, model training and validation, and portfolio formation. The modular nature of Jupyter, combined with Python's wide range of useful libraries facilitated the creation of this model. Creating each section as an independent cell allows for rigorous debugging and testing of each individual part, which would otherwise be extremely time consuming to test. The full notebook along with accompanying datasets can be found on GitHub \parencite{github}.
 
 \section{Dataset and Pre-Processing}
+\label{sec:pre-processing}
 The dataset used for training and validation is available from Kaggle\footnote{\url{https://www.kaggle.com/datasets/miguelaenlle/massive-stock-news-analysis-db-for-nlpbacktests}} and is a collection of around 1.4 million headlines for 6000 stocks from 2009 to 2020. Each headline has the date published, and the ticker that the headline concerns. Some headlines have multiple tickers associated with them, but each ticker-headline combination is a unique entry in the dataset.
 
-The first challenge is to align these headlines with the relevant three day returns, and this was achieved using the Yahoo Finance python library.\footnote{\url{https://pypi.org/project/yfinance/}} Once again, this relates to market close on day $t-2$ to close on day $t+1$ for a headline released on day $t$ (between 4pm on day $t-1$ to 4pm on day $t$). Some headlines are released on non-market days (such as weekends), and for these edge cases, the next available market day is selected as day $t$, and then the previous market day from this new day $t$ is defined as day $t-1$. Similarly, for market days where $t+1$ would fall on a non-market day, the next available market day is defined as day $t+1$. As many headline are released each day, computing the returns for each unique headline in this way would create significant redundancy, and therefore for each unique stock in the dataset, market data for the entire 11 year timespan is pulled in order to create a lookup table. Then, as opposed to calculating the stock values for each headline, if a headline is released on day $t$ relating to stock $s$, the open and close values can be retrieved via the key $(s,t)$. Finally, each headline is iterated through, assigning the appropriate market close values from the lookup table, and stored in json format for future usage. An example json entry is shown below in listing \ref{json} where `open' refers to market value of a ticker day $t-1$ and `close' refers to market value on day $t+1$.
+The first challenge is to align these headlines with the relevant three day returns, and this was achieved using the Yahoo Finance python library.\footnote{\url{https://pypi.org/project/yfinance/}} Once again, this relates to market close on day $t-2$ to close on day $t+1$ for a headline released on day $t$ (between 4pm on day $t-1$ to 4pm on day $t$). Some headlines are released on non-market days (such as weekends), and for these edge cases, the next available market day is selected as day $t$, and then the previous market day from this new day $t$ is defined as day $t-1$. Similarly, for market days where $t+1$ would fall on a non-market day, the next available market day is defined as day $t+1$. As many headline are released each day, computing the returns for each unique headline in this way would create significant redundancy, and therefore for each unique stock in the dataset, market data for the entire 11 year timespan is pulled in order to create a lookup table. Then, as opposed to calculating the stock values for each headline, if a headline is released on day $t$ relating to stock $s$, the open and close values can be retrieved via the key $(s,t)$. Finally, each headline is iterated through, assigning the appropriate market close values from the lookup table, and stored in a Python dictionary for future usage. An example dictionary entry is shown below in listing \ref{json} where `open' refers to market value of a ticker day $t-1$ and `close' refers to market value on day $t+1$.
 
-\begin{lstlisting}[float={t},caption={Example JSON headline entry},label={json},language=c]
+\begin{lstlisting}[float={t},caption={Example python dictionary headline entry},label={json},language=c]
       {
             "headline": Barclays Maintains Equal-Weight on Agilent
             Technologies, Lowers Price Target to $76
@@ -79,13 +80,13 @@ With the headlines aligned to the appropriate returns, the text data must be pre
 
 \begin{itemize}
       \item Convert the headline to lower case. This is to ensure that different cases do not lead to multiple entries of the same word, differing only by letter captialisation.
-      \item Remove non alphabetic characters
+      \item Remove non alphabet characters
       \begin{itemize}
             \item Spaces are retained to allow for tokenisation
       \end{itemize}
       \item Tokenise the headline (convert to list of words)
-      \item Remove non-English words \footnote{The list of English words is available from item 106 from \url{https://www.nltk.org/nltk_data/}}
-      \item Remove stop words. \footnote{The list of stopwords used is from item 86 from \url{https://www.nltk.org/nltk_data/}} Stop words are a term used in NLP to describe very commonly used words that are unimportant (such as `and' or `the'). They serve only as noise and are removed to allow focus on more important news.
+      \item Remove non-English words.\footnote{The list of English words is available from item 106 from \url{https://www.nltk.org/nltk_data/}}
+      \item Remove stop words.\footnote{The list of stopwords used is from item 86 from \url{https://www.nltk.org/nltk_data/}} Stop words are a term used in NLP to describe very commonly used words that are unimportant (such as `and' or `the'). They serve only as noise and are removed to allow focus on more important news.
       \item Lemmatise each word (for example converting `mice' to `mouse' or `skis' to `ski') \footnote{The lemmatisation process uses WordNet (item 106) from \url{https://www.nltk.org/nltk_data/}}
       \item Stem each word (for example, `regional' to `region').\footnote{The stemming process uses Snowball stemmer from wordnet from \url{https://www.nltk.org/nltk_data/}} Note that as stemming aims to create the most general stem of a word, it sometimes leaves a word that is not English (such as `easily' to `easili'). For this reason, if the stemmed word is not in the list of English words, but the lemmatized word is, then this word is not stemmed.
       \item Convert to bag of words (BOW) representation (list of unique words with associated word counts for a given headline)
@@ -173,7 +174,7 @@ for alpha in alpha_configs:
       sentiment_words = [w for w in total_j if ((f[w] >= train_pi + ALPHA_PLUS or f[w] <= train_pi - ALPHA_MINUS) and total_j[w] >= kappa_percentile)]
 \end{lstlisting}
 
-The training section employs the screening (section \ref{screen-sentiment}) and learning (section \ref{learn-sentiment}) steps, while the validation is the application of the scoring new headlines (section \ref{new-headlines}) step. The validation section is used to consider the hyperparameters ($\alpha_+, \alpha_-, \kappa, \lambda$), and these are evaluated according to a fixed number of possibilities. $\alpha_\pm$ is calculated such that $S$ has either 25, 50, or 100 words of each sentiment (i.e. for the selection of $\alpha = 25$, $|S| = 50$). This is calculated via binary search, assuming $\alpha_\pm = 0.25$ at first. If the resulting set of words is larger than the selected configuration, then $\alpha$ must be larger than the current value, as the larger $\alpha$ is, the fewer words satisfy the condition. Similarly, the inverse for the case where the set of words contains fewer words than desired. $\kappa$ is selected to be the 86, 88, 90, 92 or 94th percentiles of word counts. Note that the $\kappa$ restraint is applied first such that a word is not selected via the $\alpha$ constraint that must then be removed due to the $\kappa$ constraint, leaving $S$ with fewer words than desired. Combining both the calculated $\alpha_\pm$ values and the calculated $\kappa$ value, the list of sentiment words for the training window is compiled, illustrated in listing \ref{lst:calc-sentiment}. Finally, $\lambda$ is selected to be either 1, 5, or 10, for a total of 45 configurations.
+The training section employs the screening (section \ref{screen-sentiment}) and learning (section \ref{learn-sentiment}) steps, while the validation is the application of the scoring new headlines (section \ref{sub:new-headlines}) step. The validation section is used to consider the hyperparameters ($\alpha_+, \alpha_-, \kappa, \lambda$), and these are evaluated according to a fixed number of possibilities. $\alpha_\pm$ is calculated such that $S$ has either 25, 50, or 100 words of each sentiment (i.e. for the selection of $\alpha = 25$, $|S| = 50$). This is calculated via binary search, assuming $\alpha_\pm = 0.25$ at first. If the resulting set of words is larger than the selected configuration, then $\alpha$ must be larger than the current value, as the larger $\alpha$ is, the fewer words satisfy the condition. Similarly, the inverse for the case where the set of words contains fewer words than desired. $\kappa$ is selected to be the 86, 88, 90, 92 or 94th percentiles of word counts. Note that the $\kappa$ restraint is applied first such that a word is not selected via the $\alpha$ constraint that must then be removed due to the $\kappa$ constraint, leaving $S$ with fewer words than desired. Combining both the calculated $\alpha_\pm$ values and the calculated $\kappa$ value, the list of sentiment words for the training window is compiled, illustrated in listing \ref{lst:calc-sentiment}. Finally, $\lambda$ is selected to be either 1, 5, or 10, for a total of 45 configurations.
 
 Each of these 45 configurations is iterated through for each window, and the $\ell^1$ error is calculated for each, before selecting the setup with minimum error (as this is our loss function). $\ell^1$ error in this case is simply:
 
@@ -214,10 +215,44 @@ for b in bigrams_to_remove:
 
 The algorithm naturally lends itself to training with bigrams and little is needed in the way of adjustment, as the bigrams are treated the same way as words. The only slight difference is the way that bigrams are filtered out. Due to the nature of bigrams, they will be, on average, far less frequent than unigrams, simply because of the increased number of possibilities. For this reason, centain measures are taken to ensure that only meaningful bigrams are considered. For each window, all articles are divided into bigrams in the same way that the BOW representations are created. Stopwords are not considered for potential bigrams, and as such if two words are separated by a stop word, the resulting bigram would be as if the stop word were absent (e.g. `chalk and cheese' would create the bigram `chalk cheese'). Then, bigrams are removed if either component word is not common (below 85th quantile of word counts). Among the remaining phrases, only those bigrams with mutual information ranking in the top 5\% are retained. Mutual information score is calculated as the ratio of the frequency of the bigram divided by the product of the frequency of the component words. The percentile chosen here is slightly higher than the 1\% used by the original paper, as the dataset contained articles, meaning there are far more bigrams than in the dataset used here. For this reason, I chose to consider a higher number of bigrams to ensure completeness. After this filtering step, the rest of the training continues as before. The preparation for bigrams is shown in listing \ref{lst:bigram-formation}.
 
+
+\begin{table}[t]
+\centering
+\begin{tabular}{c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c<{\clearrow}}
+\toprule
+Window start date & $|S|/2$ & $\alpha_+$ & $\alpha_-$ & $\kappa$ & $\lambda$ & Minimum error & Avg Min Error\\
+\midrule
+\setrow{\bfseries}*2010-1-1 & 100 & 0.0168 & 0.0218 & 90 & 5 & 20416.73 & 0.24739\\
+2010-5-1 & 50 & 0.1123 & 0.0898 & 88 & 5 & 20716.47 & 0.24931\\
+2010-9-1 & 25 & 0.1358 & 0.1013 & 92 & 5 & 20677.31 & 0.24977\\
+2011-1-1 & 25 & 0.1175 & 0.0567 & 94 & 5 & 20238.53 & 0.24916\\
+2011-5-1 & 100 & 0.0263 & 0.0243 & 92 & 5 & 19341.18 & 0.2494\\
+2011-9-1 & 100 & 0.0697 & 0.0461 & 88 & 5 & 19354.6 & 0.2478\\
+2012-1-1 & 100 & 0.0001 & 0.0 & 94 & 5 & 20568.7 & 0.24858\\
+2012-5-1 & 100 & 0.0572 & 0.0579 & 88 & 10 & 21840.62 & 0.24962\\
+2012-9-1 & 25 & 0.1472 & 0.1714 & 86 & 10 & 22286.96 & 0.24978\\
+2013-1-1 & 25 & 0.1386 & 0.1638 & 88 & 5 & 21719.86 & 0.249\\
+2013-5-1 & 25 & 0.1419 & 0.1619 & 88 & 5 & 22357.35 & 0.24843\\
+2013-9-1 & 100 & 0.0206 & 0.0123 & 94 & 5 & 23398.95 & 0.24869\\
+2014-1-1 & 100 & 0.0183 & 0.0142 & 94 & 5 & 24854.8 & 0.24853\\
+2014-5-1 & 50 & 0.0999 & 0.1199 & 88 & 5 & 24305.78 & 0.24901\\
+2014-9-1 & 100 & 0.0274 & 0.0281 & 94 & 5 & 23519.78 & 0.24886\\
+2015-1-1 & 100 & 0.0238 & 0.0239 & 94 & 5 & 22768.1 & 0.24769\\
+2015-5-1 & 100 & 0.021 & 0.0293 & 94 & 5 & 23613.92 & 0.24843\\
+2015-9-1 & 100 & 0.0684 & 0.0618 & 90 & 5 & 26419.55 & 0.24827\\
+2016-1-1 & 100 & 0.0823 & 0.0772 & 88 & 5 & 29914.03 & 0.24788\\
+\bottomrule
+\end{tabular}
+\caption[Model configurations (bigrams)]{Best configuration and error for each window using bigrams. Smallest error window highlighted in \textbf{bold}}
+\label{tab:bigram-error-train}
+\end{table}
+
 \section{Out of Sample Testing}
-Using the optimally trained model (shown in table \ref{min-error-train}), the articles not used in either training or validation samples are then used to determine the strength of the model. Each market day $t$, the headlines released from 9 a.m. on day $t-1$ to 9 a.m. on day $t$ are selected and ranked $p$ value calculated from the scoring step (\ref{new-headlines}). Each ticker in the sample is then ranked according to sentiment of related headlines for that day. If a ticker has multiple headlines, the average sentiment from all related headlines is taken for the firm. From this, a portfolio is created, where the top 50 sentiment stocks are bought, and the lowest 50 sentiment stocks are shorted.
+Using the optimally trained model (shown in table \ref{min-error-train}), the articles not used in either training or validation samples are then used to determine the strength of the model. Each market day $t$, the headlines released from 9 a.m. on day $t-1$ to 9 a.m. on day $t$ are selected and ranked $p$ value calculated from the scoring step (\ref{sub:new-headlines}). Each ticker in the sample is then ranked according to sentiment of related headlines for that day. If a ticker has multiple headlines, the average sentiment from all related headlines is taken for the firm. From this, a portfolio is created, where the top 50 sentiment stocks are bought, and the lowest 50 sentiment stocks are shorted.
 
 Some constraints are placed on the stocks that can be chosen, to ensure that stocks are not bought when they have negative sentiment. For a stock to be bought, it must have $\widehat p_i < 0.5$, and the inverse for a stock to be sold. On the occasion where there are not 50 stocks with positive sentiment, this is to avoid the portfolio purchasing slightly negative stocks, and therefore less than 50 stocks are used in this instance.
+
+Generating portfolios from bigrams is done in a very similar manner. The bigrams are not used in solitude, and rather the list of unigrams is augmented by the bigrams calculated by the model. Let the list of sentiment charged unigrams be $S_u$ and the list of sentiment charged bigrams be $S_b$. When considering headlines, the list of sentiment words $S = (S_u \cup S_b)$. Each headline is decomposed into their respective bag of words representation in the same way. Let the unigram BOW representation of a headline be $d_u$ and likewise for bigram be $d_b$. The final BOW representation in this case would be $d = (d_u \cup d_b)$. The two sets are entirely distinct and will not interfere with one another, as it is guaranteed that no sentiment words from $S_u$ will also be in $S_b$, and therefore all sentiment charged bigrams will beconsidered neutral by the prediction model, having no impact on the predicted $\widehat p_i$. The same is true of the set of bigrams with respect to unigrams. Therefore, the resultant $\widehat p_i$ is the result of the combination of both sets of sentiment words and a reflection of sentiment in both.
 %TODO: say why 9 to 9 and not 9.30 (which is market open)
 
 
