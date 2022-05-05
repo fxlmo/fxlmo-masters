@@ -161,49 +161,61 @@
 
 \chapter*{Abstract}
 
-{\bf A compulsory section, of at most 300 words} 
-\vspace{1cm} 
 
-\noindent
-This section should pr\'{e}cis the project context, aims and objectives,
-and main contributions (e.g., deliverables) and achievements; the same 
-section may be called an abstract elsewhere.  The goal is to ensure the 
-reader is clear about what the topic is, what you have done within this 
-topic, {\em and} what your view of the outcome is.
+In this project, I implement Zheng Ke, Bryan Kelly, and Dacheng Xiu's novel text sentiment extraction algorithm and evaluate its performance when considering a dataset of headlines. I extract information from headlines and use a supervised learning framework to construct a score, which is later used for stock movement prediction. In the study of the success of this algorithm, I use data from Yahoo Finance and compare predictive results of prediction from this algorithm against baseline lexicons. My research hypothesis is that this algorithm will be able to more accurately predict the movement of stocks based on the headlines on the previous day. I hav ealso included data obtained from hte experiments conducted, allowing for verification of the methods used.
 
-The former aspects should be guided by your specification: essentially 
-this section is a (very) short version of what is typically the first 
-chapter. If your project is experimental in nature, this should include 
-a clear research hypothesis.  This will obviously differ significantly
-for each project, but an example might be as follows:
-
-\begin{quote}
-My research hypothesis is that a suitable genetic algorithm will yield
-more accurate results (when applied to the standard ACME data set) than 
-the algorithm proposed by Jones and Smith, while also executing in less
-time.
-\end{quote}
-
-\noindent
-The latter aspects should (ideally) be presented as a concise, factual 
-bullet point list.  Again the points will differ for each project, but 
-an might be as follows:
-
-\begin{quote}
-\noindent
+\section*{List of Achievements}
 \begin{itemize}
-\item I spent $120$ hours collecting material on and learning about the 
-      Java garbage-collection sub-system. 
-\item I wrote a total of $5000$ lines of source code, comprising a Linux 
-      device driver for a robot (in C) and a GUI (in Java) that is 
-      used to control it.
-\item I designed a new algorithm for computing the non-linear mapping 
-      from A-space to B-space using a genetic algorithm, see page $17$.
-\item I implemented a version of the algorithm proposed by Jones and 
-      Smith in [6], see page $12$, corrected a mistake in it, and 
-      compared the results with several alternatives.
+      \item I wrote more than 3000 lines of source code in Python for pre-processing data, constructing the algorithm, and testing by creating portfolios
+      \item I adapted the methods explored by Ke, Kelly, and Dacheng to accommodate for headline input, rather than article bodies.
+      \item I designed experiments to test the predictive success the algorithm.
+      \item I implemented the algorithm and spent considerable time optimising the code to run as efficiently as possible
+      \item I trained a number of different models to see the effect of differing setups
 \end{itemize}
-\end{quote}
+
+% {\bf A compulsory section, of at most 300 words} 
+% \vspace{1cm} 
+
+% \noindent
+% This section should pr\'{e}cis the project context, aims and objectives,
+% and main contributions (e.g., deliverables) and achievements; the same 
+% section may be called an abstract elsewhere.  The goal is to ensure the 
+% reader is clear about what the topic is, what you have done within this 
+% topic, {\em and} what your view of the outcome is.
+
+% The former aspects should be guided by your specification: essentially 
+% this section is a (very) short version of what is typically the first 
+% chapter. If your project is experimental in nature, this should include 
+% a clear research hypothesis.  This will obviously differ significantly
+% for each project, but an example might be as follows:
+
+% \begin{quote}
+% My research hypothesis is that a suitable genetic algorithm will yield
+% more accurate results (when applied to the standard ACME data set) than 
+% the algorithm proposed by Jones and Smith, while also executing in less
+% time.
+% \end{quote}
+
+% \noindent
+% The latter aspects should (ideally) be presented as a concise, factual 
+% bullet point list.  Again the points will differ for each project, but 
+% an might be as follows:
+
+% \begin{quote}
+% \noindent
+% \begin{itemize}
+% \item I spent $120$ hours collecting material on and learning about the 
+%       Java garbage-collection sub-system. 
+% \item I wrote a total of $5000$ lines of source code, comprising a Linux 
+%       device driver for a robot (in C) and a GUI (in Java) that is 
+%       used to control it.
+% \item I designed a new algorithm for computing the non-linear mapping 
+%       from A-space to B-space using a genetic algorithm, see page $17$.
+% \item I implemented a version of the algorithm proposed by Jones and 
+%       Smith in [6], see page $12$, corrected a mistake in it, and 
+%       compared the results with several alternatives.
+% \end{itemize}
+% \end{quote}
 
 % -----------------------------------------------------------------------------
 
@@ -221,9 +233,12 @@ an might be as follows:
 % or persons who  have supplied resources of some kind (e.g., funding, 
 % advice or time), and so on.
 
-I am very fortunate to work with my superviser Rami Chehab, who assisted in my research greatly and inspired the vast quantity of this project. He has been a great mentor.
+I would first like thank my family for your continued encouragement and support for my entire university life. I would also like to thank my friends for supporting me, but also making me laugh when I needed it most.
 
-I would also like to thank my friends and family for always being there for me, especially when the going gets rough. You guys really helped make this university experience what it was.
+I would also like to mention Mr. Richard Green, my secondary school computer science teacher, without who I would not be pursuing the field today.
+
+Finally, I would like to thank Rami Chehab, who assisted in my research greatly and inspired the vast quantity of this project. I could not have done this without all of you.
+
 
 
 % -----------------------------------------------------------------------------
@@ -271,17 +286,7 @@ I would also like to thank my friends and family for always being there for me, 
 
 \chapter*{Ethics Statement}
 
-{\bf A compulsory section} 
-\vspace{1cm} 
-
-In almost every project, this will be one of the following statements:
-    \begin{itemize}
-        \item ``This project did not require ethical review, as determined by my supervisor, [fill in name]''; or
-        \item ``This project fits within the scope of ethics application 0026, as reviewed by my supervisor, [fill in name]''; or
-        \item ``An ethics application for this project was reviewed and approved by the faculty research ethics committee as application [fill in number]''.
-    \end{itemize}
-    
-See Section 3.2 of the unit Handbook for more information. If something went wrong and none of those three statements apply, then you should instead explain what happened.
+This project did not require ethical review, as determined by my supervisor, Dr. Rami Chehab.
 
 
 % -----------------------------------------------------------------------------
@@ -357,8 +362,11 @@ See Section 3.2 of the unit Handbook for more information. If something went wro
 % \end{quote}
 
 \begin{itemize}
-      \item I used a sample of headlines from Kaggle as training and validation data (\url{https://www.kaggle.com/datasets/miguelaenlle/massive-stock-news-analysis-db-for-nlpbacktests})
-      \item I used the Natural Language Toolkit to assist the preprocessing of data, using their English words and stop words data (\url{https://www.nltk.org/})
+      \item I used a sample of financial headlines from Kaggle as training and validation data (\url{https://www.kaggle.com/datasets/miguelaenlle/massive-stock-news-analysis-db-for-nlpbacktests})
+      \item I used the Natural Language Toolkit to assist the preprocessing of data, using their English words, stop words data, and stemmers and lemmatizers (\url{https://www.nltk.org/})
+      \item I used the yfinance library on Python to pull stock data (\url{https://pypi.org/project/yfinance/})
+      \item I used Refinitiv Eikon to pull outstanding stock data (\url{https://www.refinitiv.com/en/products/eikon-trading-software#overview})
+      \item I used Jupyter Notebook as an interactive development environment (\url{https://docs.jupyter.org/en/latest})
 \end{itemize}
 
 
@@ -371,6 +379,19 @@ See Section 3.2 of the unit Handbook for more information. If something went wro
 \begin{tabular}{lcl}
 NLP               &:    &     Natural Language Processing \\
 SESTM             &:    &     Semantic Extraction via Screening and Topic Modelling \\
+$|x|$             &:    &     Size of $x$ \\
+TF-IDF            &:    &     Term frequency inverse document frequency\\
+EST               &:    &     Eastern standard time\\
+UTC               &:    &     Coordinated universal time\\
+\\
+\textbf{Fama French Factors} \\
+CAPM              &:    &     Capital asset pricing model\\
+$R_i$             &:    &     Return of investment\\
+$R_f$             &:    &     Risk free rate\\
+SMB               &:    &     Small minus big\\
+HML               &:    &     High minus low\\    
+RMW               &:    &     Robus minus weak\\
+CMA               &:    &     Conservative minus aggressive\\
 \\
 \textbf{SESTM Specific Notation} \\
 $m$               &:    &     Number of words in sample \\
@@ -423,31 +444,199 @@ $\hat x$          &:    &    Expected value of variable $x$ \\
 
 \appendix
 
-% \include{appendix.tex}
-\chapter{Appendix}
-\label{appx}
+% \chapter{Appendix}
+% \label{appx}
 
-Content which is not central to, but may enhance the dissertation can be 
-included in one or more appendices; examples include, but are not limited
-to
+% Content which is not central to, but may enhance the dissertation can be 
+% included in one or more appendices; examples include, but are not limited
+% to
 
-\begin{itemize}
-\item lengthy mathematical proofs, numerical or graphical results which 
-      are summarised in the main body,
-\item sample or example calculations, 
-      and
-\item results of user studies or questionnaires.
-\end{itemize}
+% \begin{itemize}
+% \item lengthy mathematical proofs, numerical or graphical results which 
+%       are summarised in the main body,
+% \item sample or example calculations, 
+%       and
+% \item results of user studies or questionnaires.
+% \end{itemize}
 
-\noindent
-Note that in line with most research conferences, the marking panel is not
-obliged to read such appendices. The point of including them is to serve as
-an additional reference if and only if the marker needs it in order to check
-something in the main text. For example, the marker might check a program listing 
-in an appendix if they think the description in the main dissertation is ambiguous.
+% \noindent
+% Note that in line with most research conferences, the marking panel is not
+% obliged to read such appendices. The point of including them is to serve as
+% an additional reference if and only if the marker needs it in order to check
+% something in the main text. For example, the marker might check a program listing 
+% in an appendix if they think the description in the main dissertation is ambiguous.
+
 
 % =============================================================================
 \chapter{List of Optimisations}
+\label{appx:optimisations}
+As part of the project I intended to optimise my implementation of the algorithm. This section of the appendix details the optimisations I made, along with justifications and overall speedup.The training and validation window is a simple three deep nested loop with $O(n^3)$, so keeping the inside of the loop as small as possible is paramount. Small increments in runtime here are compounded significantly. The original algorithm is shown in Listing \ref{lst:train-val-orig}. In this listing, the first optimisation can be seen. Python allows the use of \textit{list comprehension}, which is a shorthand method of creating list while using a loop. The basic idea behind this is shown in Listing \ref{lst:list-comprehension}. As shown in the Python wiki \cite{list-comprehension}, there is a slight speedup when using list comprehension, because in this example, it does not have to look up the list and the append method every iteration. When using many datapoints and inside a triple nested loop, this slight time gain is significant.
+
+\begin{lstlisting}[float={!htb},caption={List comprehension example},label={lst:list-comprehension},language=Python]
+#round each value in oldlist to 2 dp and place into newlist
+oldlist = [0.121, 0.232, 0.465, 0.987]
+
+#standard for loop
+newlist = []
+for num in oldlist:
+      newlist.append(round(num,2))
+
+#list comprehension
+newlist = [round(num, 2) for num in oldlist]
+\end{lstlisting}
+
+\begin{lstlisting}[float={!htb},caption={Original training and validation window},label={lst:train-val-orig},language=Python]
+
+for alpha in alpha_configs:
+      for KAPPA in kappa_configs:
+            for lam in lambda_configs:
+                  #TRAINING
+                  kappa_percentile = np.percentile(np.array(list(total_j.values())),KAPPA) # return the nth percentile of all appearances for KAPPA
+
+                  #calculate alpha vals
+                  ALPHA_PLUS  = train_pi/2
+                  ALPHA_MINUS = train_pi/2
+                  num_pos_words = len([w for w in total_j if f[w] >= train_pi + ALPHA_PLUS and total_j[w] >= kappa_percentile])
+                  num_neg_words = len([w for w in total_j if f[w] <= train_pi - ALPHA_MINUS and total_j[w] >= kappa_percentile])
+                  while(num_pos_words > alpha):
+                        ALPHA_PLUS += 0.0001
+                        num_pos_words = len([w for w in total_j if f[w] >= train_pi + ALPHA_PLUS and total_j[w] >= kappa_percentile])
+                  while(num_neg_words > alpha):
+                        ALPHA_MINUS += 0.0001
+                        num_neg_words = len([w for w in total_j if f[w] <= train_pi - ALPHA_MINUS and total_j[w] >= kappa_percentile])
+                  sentiment_words = [w for w in total_j if f[w] >= train_pi + ALPHA_PLUS and total_j[w] >= kappa_percentile])
+
+                  sentiment_words = [w for w in total_j if ((f[w] >= train_pi + ALPHA_PLUS or f[w] <= train_pi - ALPHA_MINUS) and total_j[w] >= kappa_percentile)]
+
+                  (s, d_s)    = calc_s(sentiment_words, train_d)
+                  h           = calc_h(sentiment_words, train_d, s, d_s)
+                  O           = calc_o(p,h)
+
+                  # VALIDATION
+                  error_arr = np.array(0)
+                  for val_index in range(len(val_d)):
+                        est_p = 0.5
+                        val_bow = val_d[val_index]
+
+                        testing_s = sum(val_bow.get(w,0) for w in sentiment_words)
+                        if (testing_s > 0):
+                              est_p = fminbound(equation_to_solve, 0, 1, (O,val_bow, sentiment_words,testing_s,LAM))
+                        error_arr = np.append(error_arr, est_p - val_p[val_index])
+                  normalised_error = np.linalg.norm(error_arr, 1)
+                  lam_trial = {
+                        'alpha': alpha,
+                        'alpha_plus': ALPHA_PLUS,
+                        'alpha_minus': ALPHA_MINUS,
+                        'kappa': KAPPA,
+                        'lam': LAM,
+                        'o': O,
+                        'sentiment_words': sentiment_words,
+                        'norm_err': normalised_error
+                  }
+                  trials.append(lam_trial)
+                  best_config = min(trials, key=lambda x:x['norm_err'])
+\end{lstlisting}
+
+It is also possible to take some of the computation up a loop level. For example, calculating the \texttt{kappa\_percentile} does not rely on either of the other loop values, and therefore can be taken to the first level of the loop. Similarly, the values for \texttt{alpha} only require information from \texttt{kappa}, and this can therefore be moved to the second loop. The training section only takes around 5 seconds in total to complete a single iteration, but this only needs to be computed around 15 times (once for each configuration of $\kappa$ and $\alpha$) rather than 45 (including $\alpha$), leading to a potential speedup of 150 seconds. Over all 19 windows, this equates to around an hour total removed from the runtime. These changes can be seen in a shortened version of the complete code in Listing \ref{lst:loop-level}.
+
+\begin{lstlisting}[float={!htb},caption={Moving computation up loop levels},label={lst:loop-level},language=Python]
+for KAPPA in kappa_configs:
+      kappa_percentile = np.percentile(np.array(list(total_j.values())),KAPPA) # return the nth percentile of all appearances for KAPPA
+      for alpha in alpha_configs:
+            #calculate alpha vals
+            ...
+            for lam in lambda_configs:
+                  ...
+\end{lstlisting}
+
+Furthermore, the efficiency of locating the values of $\alpha$ can be increased. Instead of incrementally searching values, a binary search can be employed. For each estimated value of $\alpha_\pm$, if the number of sentiment words calculated using this parameter is too large, then $\alpha_\pm$ is too small, otherwise it is too big. To shorten computation, by halving the change in value each time, the possibilities are also halved, reducing time from $O(n)$ to $O(\log(n))$. The updated $\alpha$ calculation is shown in Listing \ref{lst:binary}
+\begin{lstlisting}[float={!htb},caption={Binary search for alpha values},label={lst:binary},language=Python]
+ALPHA_PLUS  = train_pi/2
+ALPHA_MINUS = train_pi/2
+delta_plus  = train_pi/4
+delta_minus  = train_pi/4
+delta_limit = 0.0001 # set a limit on number of searches
+while(delta_plus > delta_limit):
+      no_pos_words = len([w for w in total_j if f[w] >= train_pi + ALPHA_PLUS and total_j[w] >= kappa_percentile])
+      if no_pos_words == alpha:
+            #alpha found
+            delta_plus = 0
+      elif (no_pos_words > alpha):
+            ALPHA_PLUS += delta_plus
+            delta_plus /= 2
+      else:
+            ALPHA_PLUS -= delta_plus
+            delta_plus /= 2
+while(delta_minus > delta_limit):
+      no_neg_words = len([w for w in total_j if f[w] <= train_pi - ALPHA_MINUS and total_j[w] >= kappa_percentile])
+      if no_neg_words == alpha:
+            #alpha found
+            delta_minus = 0
+      elif (no_neg_words > alpha):
+            ALPHA_MINUS += delta_minus
+            delta_minus /= 2
+      else:
+            ALPHA_MINUS -= delta_minus
+            delta_minus /= 2
+sentiment_words = [w for w in total_j if ((f[w] >= train_pi + ALPHA_PLUS or f[w] <= train_pi - ALPHA_MINUS) and total_j[w] >= kappa_percentile)]
+\end{lstlisting}
+
+Finally, I opted to use multithreading to calculate each of the $\lambda$ values at the highest loop level. This algorithm lends itself to multithreading because the order in which the calculations are returned do not matter. For this reason, I chose to run each configuration of $\lambda$ on its own thread. The updated code for calculating $\lambda$ can be seen in Listing \ref{lst:multithread}.
+
+\begin{lstlisting}[float={!htb},caption={Multithreadling Lambda},label={lst:multithread},language=Python]
+def validate_window(index, val_d, val_p, sentiment_words, LAM, trials):
+    error_arr = np.array(0)
+    # print(str(index) + " computing lambda of " + str(LAM))
+    for val_index in range(len(val_d)):
+        est_p = 0.5
+        val_bow = val_d[val_index]
+
+        testing_s = sum(val_bow.get(w,0) for w in sentiment_words)
+        if (testing_s > 0):
+            est_p = fminbound(equation_to_solve, 0, 1, (O,val_bow, sentiment_words,testing_s,LAM))
+        error_arr = np.append(error_arr, est_p - val_p[val_index])
+    normalised_error = np.linalg.norm(error_arr, 1)
+    lam_trial = {
+        'alpha': alpha,
+        'alpha_plus': ALPHA_PLUS,
+        'alpha_minus': ALPHA_MINUS,
+        'kappa': KAPPA,
+        'lam': LAM,
+        'o': O,
+        'sentiment_words': sentiment_words,
+        'norm_err': normalised_error
+    }
+    trials.append(lam_trial)
+
+for kappa in kappa_configs:
+      for alpha in alpha_configs:
+            ...
+            threads = []
+            for index in range(3):
+                x = threading.Thread(target=validate_window, args=(index,val_d, val_p, sentiment_words,lambda_configs[index],trials))
+                threads.append(x)
+                x.start()
+
+            for index, thread in enumerate(threads):
+                thread.join()
+\end{lstlisting}
+
+To quantify the speedup of the various steps, I ran a series of experiments, and timed the computation. I tested a single configuration for each configuration of $\alpha$, as this has the most impact on computation time (as intuitively, the more words in the word list, more computation required in validation). The results in Table \ref{tab:speedup} are calculated using an Intel Core i5-4460 CPU. Each cell in the table refers to the average runtime for all $\lambda$ configurations for $\kappa = 86$, and $\alpha$ is as defined in the table over 5 repetitions. The total speedup refers to the speedup from the original to the most optimised (multithreading).
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{lllll}
+      \toprule
+      Alpha value & Original & List Comprehension & Multithreading & Total speedup \\
+      \midrule
+      25 & 146s & 93s   & 43s & 3.93X \\
+      50 & 313s & 208s  & 75s & 4.17X\\
+      100& 390s & 353s  & 150s& 2.6X\\
+      \bottomrule
+\end{tabular}
+\caption{Speedup for each optimisation}
+\label{tab:speedup}
+\end{table}
 
 \chapter{Word and Phrase lists}
 \begin{table}[!ht]

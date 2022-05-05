@@ -3,7 +3,7 @@
 
 % \subsection{Generating the sample}
 % \begin{itemize}
-%       \item Discuss aligning hte article with returns
+%       \item Discuss aligning hte headline with returns
 %       \begin{itemize}
 %             \item Discuss private stocks and public stocks
 %             \item Discuss non market days
@@ -13,8 +13,15 @@
 % \end{itemize}
 In this section, we present the execution of the project, giving an overview of the dataset used, the configurations of hyperparameters and programming completed. The main idea of the project is to gather a dataset of headlines over a given time period and implement and analyse the algorithm presented by Ke et al. in their 2019 paper \parencite{sestm}. Due to the difference in language used in headlines compared to that used in headlines, slightly different approaches were considered for some of the steps, but the theory behind the model remains unchanged.
 
-\section{Project Components}
-For this project, I opted to use Jupyter notebook as a base on which to implement the data processing, model training and validation, and portfolio formation. The modular nature of Jupyter, combined with Python's wide range of useful libraries facilitated the creation of this model. Creating each section as an independent cell allows for rigorous debugging and testing of each individual part, which would otherwise be extremely time consuming to test. The full notebook along with accompanying datasets can be found on GitHub \parencite{github}.
+\section{Project Overview}
+
+\subsection{Main Idea}
+The main concept of this project is to test the robustness of Ke, Kelly and Xiu's SESTM algorithm by attempting to use it with a dataset of headlines. This dataset would contain text that is much shorter than the full body of the headline and therefore could create some obstacles. I planned to begin the project by thoroughly reading and understanding the original literature, as I planned on implementing the algorithm, and to do so without full prior knowledge of the working would be impossible. After familiarising myself with the algorithm, I intended to locate an appropriate dataset and preprocess it accordingly. From this, I could begin the process of training the algorithm. Finally, with a model trained, I planned to design and execute similar experiments as were carried out in the original papers, and observe the results. As a point of reference, I also chose to compare the results with that of similar methods, two lexicons: Harvard IV and Loughran McDonald. From these results, I could analyse and conclude the success or difficulties the algorithm has in predicting returns using headlines as input.
+
+\subsection{Project Components}
+For this project, I opted to use Jupyter notebook as a base on which to implement the data processing, model training and validation, and portfolio formation. The modular nature of Jupyter, combined with Python's wide range of useful libraries facilitated the creation of this model. Creating each section as an independent cell allows for rigorous debugging and testing of each part as an individual piece of code, rather than running and debugging an entire script each time. This streamlined the debugging phase of the project.
+
+The full notebook along with accompanying datasets can be found on GitHub \parencite{github}. I opted to use Git as version control for the project. It is used globally and I have previous experience with Git, therefore to keep track of changes made, and allow for fallbacks when problems were encoutered, I used Git.
 
 \section{Dataset and Pre-Processing}
 \label{sec:pre-processing}
@@ -67,11 +74,11 @@ for t in stock_data:
       day_t_data[t] = ticker_date_data
 \end{lstlisting}
 
-Note that some tickers do not have publicly available stock market information for the entire span of the sample. This is due to some companies being private for the duration, or turning private, meaning that their information is not accessible through standard means. Headlines aligned with these private tickers are removed from the sample, leaving around 1 million articles in the sample.
+Note that some tickers do not have publicly available stock market information for the entire span of the sample. This is due to some companies being private for the duration, or turning private, meaning that their information is not accessible through standard means. Headlines aligned with these private tickers are removed from the sample, leaving around 1 million headlines in the sample.
 
 With the headlines aligned to the appropriate returns, the text data must be preprocessed to allow for successful and efficient semantic analysis. Taking the text content of each headline, the following transformations are applied, also detailed by figure \ref{fig:pre-processing-flow}:
 
-\begin{figure}[!ht]
+\begin{figure}[!htbp]
       \centering
       \includegraphics[scale=.6]{./pics/pre-processing-flowchart.png}
       \caption[Bag of words flowchart]{Flowchart showing conversion of raw headline into bag of words format}
@@ -94,10 +101,93 @@ With the headlines aligned to the appropriate returns, the text data must be pre
 
 By utilising stemming where appropriate (i.e. when the stemmed word is included in the list of English words), we ensure that the resulting bag of words most closely resembles the original headline, while also grouping words that are similar by root. This helps to keep sentment consistent, as the root of a word is likely to be what holds sentiment, rather than the form it is used in. Another complication is the part of speech according to which a word is lemmatised. For example, the word `trying' is both a noun and a verb, depending on context (e.g. `a \textit{trying} quarter' versus `I was \textit{trying} really hard'). The lemmatisation of this word in the context of a noun is `trying', in verb context is `try' and the stem is `tri'. By default, the Wordnet Lemmatizer assumes the input is a noun, and I decided to do the same, at the potential risk of misclassifying a word. However, the shortcomings of treating each word as a noun are often covered by the stemming of the word, therefore using the two in conjunction gives the most accurate root of a word.
 
+\section{Implementing the Algorithm}
+\label{sec:implementation}
+Having sourced the headlines, I was able to start implementing SESTM in Python. As I did not have access to the data used in the original paper, I could not simply input data and check if similar results were obtained. Instead, I created some dummy headlines and checked that the output result was as expected for each section of the algorithm. This method of working helped solidify the content of the original paper and aided my familiarisation with the algorithm. For these examples, I chose $\kappa = 0, \lambda = 1, \alpha_- = 0.2$ and $\alpha_+ = 0$. This is because the sample size is incredibly small, and I did not want to remove any of the words from the set of sentiment words for low frequency in this example.
 
-\section{Training the Model}
+\begin{lstlisting}[float={!ht},caption={Example input},label={lst:example-input},language=Python]
+headline_1 = {
+    'date': '2021-12-23 12:58:45.061000+00:00',
+    'ticker': 'FDX',
+    'mrkt_info': {
+        'open': 233.7,
+        'close': 200.3
+    },
+    'headline': 'Josh likes to watch football games'
+}
+
+headline_2 = {
+    'date': '2022-01-26 07:11:46.774000+00:00',
+    'ticker': 'ABDN', 
+    'mrkt_info': {
+        'open': 229.2,
+        'close': 241.0
+    },
+    'headline': '<p>Mary also likes to watch football games and films. She prefers films. </p>'
+}
+
+headline_3 = {
+    'date': '2021-10-25 13:22:07.985000+00:00',
+    'ticker': 'ABDN',
+    'mrkt_info': {
+        'open': 250.3,
+        'close': 258.5
+    },
+    'headline': '<p>Carl likes to play football. He finds films boring.</p>'
+}
+\end{lstlisting}
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{llll}
+      \toprule
+      Word & $O_+$ & $O_-$ & $f_j$ \\
+      \midrule
+      josh & 0.0 & 0.3111 & 0.0 \\
+      like & 0.1053 & 0.2778 & 0.6667 \\
+      football & 0.1053 & 0.2778 & 0.6667 \\
+      mary & 0.1128 & 0.0 & 1.0 \\
+      also & 0.1128 & 0.0 & 1.0 \\
+      film & 0.2707 & 0.0 & 1.0 \\
+      prefer & 0.1128 & 0.0 & 1.0 \\
+      carl & 0.0451 & 0.0333 & 1.0 \\
+      play & 0.0451 & 0.0333 & 1.0 \\
+      find & 0.0451 & 0.0333 & 1.0 \\
+      bore & 0.0451 & 0.0333 & 1.0  \\
+      \bottomrule
+\end{tabular}
+\caption{Resultant output from example headlines}
+\label{tab:example-output}
+\end{table}
+
+As shown in listing \ref{lst:example-input} and table \ref{tab:example-output}, the matrix $O$ is as expected, with the one word appearing in both positive headlines (\textit{film}) having the highest $O_+$, while the only word to appear in a negative headline having $O_+ = 0$ and high $O_-$. These respective values reflect the estimated probability that a word is in a maximally positive (for $O_+$) or negative headline (for $O_-$). The values for $O$ are calculated as detailed in \ref{sub:learn-sentiment}. Notably, the words appearing in headline 3 all have a value for $O_-$ despite appearing only in positive headlines. This is because the headline is not maximally positive or negative, and therefore every word has slight negative weighting.
+
+Furthermore, words that appear in multiple headlines have their $O_\pm$ scores compounded. The words \textit{like} and \textit{football} appear in all three headlines once each. One would expect the two values of $O_\pm$ to be very close. However, these words lean more negatively. This is because the count of sentiment words in headline 1, which is a negative headline, is low. SESTM therefore assigns more weight to the words in that headline, yielding the negative reflection in $O$. The `word' value also shows the successful preprocessing of each of the words to their respective stem. This shows the successful estimation of sentiment in a small sample. 
+
+After the implementation of the training section, I implemented the scoring segment, described in \ref{sub:new-headlines}. I once again created a dummy headline that was very similar to headline 3 from the dummy inputs to test if it would give a similar estimate. The input is shown in \ref{lst:example-train}, and the $\widehat p$ value for this headline is shown in \ref{fig:est-p}. As expected, the predicted value is very similar to the $p$ value of headline 3, although pushed slightly towards the neutral. This squashing is the result of the penalty term, $\lambda$. At higher values of $\lambda$, this estimated $p$ is pushed closer to neutral.
+
+\begin{lstlisting}[float={!htb},caption={Example validation headline},label={lst:example-train},language=Python]
+headline_4 = {
+    'date': '2022-02-15 16:23:17.923000+00:00',
+    'ticker': 'ABDN',
+    'mrkt_info': {
+        'open': 250.3,
+        'close': 258.5
+    },
+    'html': 'Alice finds films and pizza boring'
+}
+\end{lstlisting}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.5\textwidth]{pics/est_p.png}
+\caption[Testing scoring new line]{Estimated $p$ values, with maximum $p = 0.622$}
+\label{fig:est-p}
+\end{figure}
+
+\subsection{Training the Model}
 \label{sec:training-model}
-Using the BOW representation of each of the headlines, the data is able to be processed according to the algorithm outlined by Ke et al. In the spirit of the original paper, the dataset is divided up into 17 three year training and validation windows, where two years are used for training a model, and the final year is used for validation purposes. More concretely, the training sample begins in 2010-01-01 and ends on 2017-12-31, the validation sample begins in 2012-01-01 and ends in 2018-12-31, leaving articles between 2019-01-01 and 2020-06-08 as an out of sample dataset used for testing the robustness of the model. All the computation is completed on this window, and then it is moved forward four months and repeated in a rolling window method.
+Once the Kaggle sample has been pre-processed as detailed in \ref{sec:pre-processing}, the model can be trained according to the algorithm outlined. In the spirit of the original paper, the dataset is divided up into 17 three year training and validation windows, where two years are used for training a model, and the final year is used for validation purposes. More concretely, the training sample begins in 2010-01-01 and ends on 2017-12-31, the validation sample begins in 2012-01-01 and ends in 2018-12-31, leaving headlines between 2019-01-01 and 2020-06-08 as an out of sample dataset used for testing the robustness of the model. All the computation is completed on this window, and then it is moved forward four months and repeated in a rolling window method.
 
 \begin{table}[t]
 \centering
@@ -133,7 +223,7 @@ Window start date & $|S|/2$ & $\alpha_+$ & $\alpha_-$ & $\kappa$ & $\lambda$ & M
 \begin{lstlisting}[float={!htb},caption={Calculating list of sentiment words},label={lst:calc-sentiment},language=Python]
 kappa_configs   = [86, 88, 90, 92, 94]
 alpha_configs   = [25,50,100]
-# fraction of positively tagged training articles
+# fraction of positively tagged training headlines
 train_pi = sum(sgn_i > 0 for sgn_i in train_sgn)/len(train_sgn)
 for alpha in alpha_configs:
       for KAPPA in kappa_configs:
@@ -174,7 +264,7 @@ for alpha in alpha_configs:
       sentiment_words = [w for w in total_j if ((f[w] >= train_pi + ALPHA_PLUS or f[w] <= train_pi - ALPHA_MINUS) and total_j[w] >= kappa_percentile)]
 \end{lstlisting}
 
-The training section employs the screening (section \ref{screen-sentiment}) and learning (section \ref{learn-sentiment}) steps, while the validation is the application of the scoring new headlines (section \ref{sub:new-headlines}) step. The validation section is used to consider the hyperparameters ($\alpha_+, \alpha_-, \kappa, \lambda$), and these are evaluated according to a fixed number of possibilities. $\alpha_\pm$ is calculated such that $S$ has either 25, 50, or 100 words of each sentiment (i.e. for the selection of $\alpha = 25$, $|S| = 50$). This is calculated via binary search, assuming $\alpha_\pm = 0.25$ at first. If the resulting set of words is larger than the selected configuration, then $\alpha$ must be larger than the current value, as the larger $\alpha$ is, the fewer words satisfy the condition. Similarly, the inverse for the case where the set of words contains fewer words than desired. $\kappa$ is selected to be the 86, 88, 90, 92 or 94th percentiles of word counts. Note that the $\kappa$ restraint is applied first such that a word is not selected via the $\alpha$ constraint that must then be removed due to the $\kappa$ constraint, leaving $S$ with fewer words than desired. Combining both the calculated $\alpha_\pm$ values and the calculated $\kappa$ value, the list of sentiment words for the training window is compiled, illustrated in listing \ref{lst:calc-sentiment}. Finally, $\lambda$ is selected to be either 1, 5, or 10, for a total of 45 configurations.
+The training section employs the screening (section \ref{screen-sentiment}) and learning (section \ref{sub:learn-sentiment}) steps, while the validation is the application of the scoring new headlines (section \ref{sub:new-headlines}) step. The validation section is used to consider the hyperparameters ($\alpha_+, \alpha_-, \kappa, \lambda$), and these are evaluated according to a fixed number of possibilities. $\alpha_\pm$ is calculated such that $S$ has either 25, 50, or 100 words of each sentiment (i.e. for the selection of $\alpha = 25$, $|S| = 50$). This is calculated via binary search, assuming $\alpha_\pm = 0.25$ at first. If the resulting set of words is larger than the selected configuration, then $\alpha$ must be larger than the current value, as the larger $\alpha$ is, the fewer words satisfy the condition. Similarly, the inverse for the case where the set of words contains fewer words than desired. $\kappa$ is selected to be the 86, 88, 90, 92 or 94th percentiles of word counts. Note that the $\kappa$ restraint is applied first such that a word is not selected via the $\alpha$ constraint that must then be removed due to the $\kappa$ constraint, leaving $S$ with fewer words than desired. Combining both the calculated $\alpha_\pm$ values and the calculated $\kappa$ value, the list of sentiment words for the training window is compiled, illustrated in listing \ref{lst:calc-sentiment}. Finally, $\lambda$ is selected to be either 1, 5, or 10, for a total of 45 configurations.
 
 Each of these 45 configurations is iterated through for each window, and the $\ell^1$ error is calculated for each, before selecting the setup with minimum error (as this is our loss function). $\ell^1$ error in this case is simply:
 
@@ -184,7 +274,7 @@ Each of these 45 configurations is iterated through for each window, and the $\e
 \end{equation}
 
 \noindent
-where $\widehat{p_i}$ is the estimated sentiment and $p_i$ is the standardised return rank of article $i$ in the validation set. The loss function of $\ell^1$-norm error was selected for its robustness. The entire process of training and validation takes a considerable length of time and therefore some time was spent optimising the code. A complete list of optimisations can be found in appendix (REFERENCE) %TODO: add optimisation list and reference it
+where $\widehat{p_i}$ is the estimated sentiment and $p_i$ is the standardised return rank of headline $i$ in the validation set. The loss function of $\ell^1$-norm error was selected for its robustness. The entire process of training and validation takes a considerable length of time and therefore some time was spent optimising the code. A complete list of optimisations can be found in appendix \ref{appx:optimisations}. %TODO: add optimisation list and reference it
 
 
 Table \ref{min-error-train} details the results of the completed rolling window training. Due to the nature of news, some validation sets are larger than others, leading to skewed summed $\ell^1$-norm error. To accommodate for this variation is sample size, the error is taken as an average over all headlines in the sample. Window 2011-1-1 has the smallest minimum error, but also has the smallest validation sample size and after controlling for this factor, window 2013-5-1 is has slightly lower error, meaning this is the optimum window.
@@ -193,7 +283,7 @@ Table \ref{min-error-train} details the results of the completed rolling window 
 Naturally, the order in which words appear in a headline can have a profound impact on the sentiment of a word. This can be captured by training the model on \textit{bigrams}, which are sequences of two words, rather than single words alone. This can then be combined with the lexicon of unigrams to provide a clearer insight into the true sentiment of a headline based on the words used.
 
 
-\begin{lstlisting}[float={!htb},caption={Calculating list of sentiment words},label={lst:bigram-formation},language=Python]
+\begin{lstlisting}[float={!htb},caption={Calculating list of sentiment charged bigrams},label={lst:bigram-formation},language=Python]
 KAPPA_BIGRAM = 90
 kappa_percentile_bigram = np.percentile(np.array(list(total_j.values())),KAPPA_BIGRAM)
 # return the nth percentile of all appearances for KAPPA_BIGRAM
@@ -213,10 +303,10 @@ for b in bigrams_to_remove:
       f_bigram.pop(b)
 \end{lstlisting}
 
-The algorithm naturally lends itself to training with bigrams and little is needed in the way of adjustment, as the bigrams are treated the same way as words. The only slight difference is the way that bigrams are filtered out. Due to the nature of bigrams, they will be, on average, far less frequent than unigrams, simply because of the increased number of possibilities. For this reason, centain measures are taken to ensure that only meaningful bigrams are considered. For each window, all articles are divided into bigrams in the same way that the BOW representations are created. Stopwords are not considered for potential bigrams, and as such if two words are separated by a stop word, the resulting bigram would be as if the stop word were absent (e.g. `chalk and cheese' would create the bigram `chalk cheese'). Then, bigrams are removed if either component word is not common (below 85th quantile of word counts). Among the remaining phrases, only those bigrams with mutual information ranking in the top 5\% are retained. Mutual information score is calculated as the ratio of the frequency of the bigram divided by the product of the frequency of the component words. The percentile chosen here is slightly higher than the 1\% used by the original paper, as the dataset contained articles, meaning there are far more bigrams than in the dataset used here. For this reason, I chose to consider a higher number of bigrams to ensure completeness. After this filtering step, the rest of the training continues as before. The preparation for bigrams is shown in listing \ref{lst:bigram-formation}.
+The algorithm naturally lends itself to training with bigrams and little is needed in the way of adjustment, as the bigrams are treated the same way as single words. The only slight difference is the way that bigrams are filtered out. Due to the nature of bigrams, they will be, on average, far less frequent than unigrams, simply because of the increased number of possibilities. For this reason, centain measures are taken to ensure that only meaningful bigrams are considered. For each window, all headlines are divided into bigrams in the same way that the BOW representations are created. Stopwords are not considered for potential bigrams, and as such if two words are separated by a stop word, the resulting bigram would be as if the stop word were absent (e.g. `chalk and cheese' would create the bigram `chalk cheese'). Then, bigrams are removed if either component word is not common (below 85th quantile of word counts). Among the remaining phrases, only those bigrams with mutual information ranking in the top 5\% are retained. Mutual information score is calculated as the ratio of the frequency of the bigram divided by the product of the frequency of the component words. The percentile chosen here is slightly higher than the 1\% used by the original paper, as the dataset contained article bodies, meaning there are far more bigrams than in that dataset than the one used here. For this reason, I chose to consider a higher percentage to encapsulate more bigrams to ensure correctness. After this filtering step, the rest of the training continues as before. The preparation for bigrams is shown in listing \ref{lst:bigram-formation}.
 
 
-\begin{table}[t]
+\begin{table}[!t]
 \centering
 \begin{tabular}{c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c>{\rowmac}c<{\clearrow}}
 \toprule
@@ -248,11 +338,28 @@ Window start date & $|S|/2$ & $\alpha_+$ & $\alpha_-$ & $\kappa$ & $\lambda$ & M
 \end{table}
 
 \section{Out of Sample Testing}
-Using the optimally trained model (shown in table \ref{min-error-train}), the articles not used in either training or validation samples are then used to determine the strength of the model. Each market day $t$, the headlines released from 9 a.m. on day $t-1$ to 9 a.m. on day $t$ are selected and ranked $p$ value calculated from the scoring step (\ref{sub:new-headlines}). Each ticker in the sample is then ranked according to sentiment of related headlines for that day. If a ticker has multiple headlines, the average sentiment from all related headlines is taken for the firm. From this, a portfolio is created, where the top 50 sentiment stocks are bought, and the lowest 50 sentiment stocks are shorted.
+\label{sec:oos-testing}
+Using the optimally trained model (shown in table \ref{min-error-train}), the headlines not used in either training or validation samples are then used to determine the strength of the model. Each market day $t$, the headlines released from 9 a.m. on day $t-1$ to 9 a.m. on day $t$ are selected and ranked according to the $p$ value calculated from the scoring step (\ref{sub:new-headlines}). Each ticker in the sample is then ranked according to sentiment of related headlines for that day. If a ticker has multiple headlines, the average sentiment from all related headlines is taken for the firm. From this, a portfolio is created, where the top 50 sentiment stocks are bought, and the lowest 50 sentiment stocks are shorted.
 
-Some constraints are placed on the stocks that can be chosen, to ensure that stocks are not bought when they have negative sentiment. For a stock to be bought, it must have $\widehat p_i < 0.5$, and the inverse for a stock to be sold. On the occasion where there are not 50 stocks with positive sentiment, this is to avoid the portfolio purchasing slightly negative stocks, and therefore less than 50 stocks are used in this instance.
 
-Generating portfolios from bigrams is done in a very similar manner. The bigrams are not used in solitude, and rather the list of unigrams is augmented by the bigrams calculated by the model. Let the list of sentiment charged unigrams be $S_u$ and the list of sentiment charged bigrams be $S_b$. When considering headlines, the list of sentiment words $S = (S_u \cup S_b)$. Each headline is decomposed into their respective bag of words representation in the same way. Let the unigram BOW representation of a headline be $d_u$ and likewise for bigram be $d_b$. The final BOW representation in this case would be $d = (d_u \cup d_b)$. The two sets are entirely distinct and will not interfere with one another, as it is guaranteed that no sentiment words from $S_u$ will also be in $S_b$, and therefore all sentiment charged bigrams will beconsidered neutral by the prediction model, having no impact on the predicted $\widehat p_i$. The same is true of the set of bigrams with respect to unigrams. Therefore, the resultant $\widehat p_i$ is the result of the combination of both sets of sentiment words and a reflection of sentiment in both.
+\begin{lstlisting}[float={!htb},caption={Collecting Outstanding Stock Information},label={lst:eikon-stocks},language=Python]
+# list of unique tickers in list of 
+for t in outstanding_tickers:
+      if not exists(t + '.json'):
+            df,err = ek.get_data([t + '.N'], ['TR.CompanyMarketCap.Date', 'TR.TtlCmnSharesOut'], {'SDate': '2019-01-01', 'EDate': '2020-08-06', 'FRQ': 'D'})
+            if (len(df.index) > 1):
+                  df.to_json(t + '.json', orient='records', lines=True)
+            else:
+                  print("no outstanding stock information for " + t)
+\end{lstlisting}
+
+I consider two methods of portfolio formation for each strategy: equal weighting (EW) and value weighting (VW). I decided to use these and ignore the price weighting strategy, as most of the information gained from testing this weighting method is captured by the combination of EW and VW. On each day of the out of sample time period, an arbitrary value is invested into each stock, taking either the long position for postively estimated stocks or the short position for negatively estimated stocks. This value is the same each day, although because the returns are calculated as a percentage, the raw value invested does not change the results. For the equally weighted portfolio, calculating the weights of each stock in a daily portfolio is simple and described in \ref{ssub:portfolio-creation}. For value weighting, more data is required, namely the outstanding stock information. I used Refinitiv Eikon \textcite{eikon} to access this data, as I found it to be more reliable than the yfinance Python library for gathering outstanding stock data. For each unique stock in the list of headlines, the outstanding stocks are pulled and stored for later use, shown in figure \ref{lst:eikon-stocks}. Eikon requires each stock ticker to have a suffix of the exchange, hence use of \lstinline[language=python]|t + '.N'|, which indicates the New York Stock Exchange. Importantly, the stocks purchased or sold on a given day by both strategies are almost identical, as some have no outstanding stock data and are therefore disregarded in the value weighted portfolio. The only difference between the two is the weighting.
+
+Some constraints are placed on the stocks that can be chosen, to ensure that stocks are not bought when they have negative sentiment. For a stock to be bought, it must have $\widehat p_i < 0.5$, and the inverse for a stock to be sold. This is to avoid the portfolio purchasing slightly negative stocks and selling slightly positive stocks. It also removes the possiblility of the portfolio selling and buying the same stock on the same day. On such occasions, fewer than 100 stocks will be traded on that day.
+
+Generating portfolios from bigrams is done in a very similar manner. The bigrams are not used in solitude. Rather, the list of unigrams is augmented by the bigrams calculated by the model. Let the list of sentiment charged unigrams, and the associated matrix of probabilities be $S_u$ and $O_u$ respectively and the list of sentiment charged bigrams and respective matrix be $S_b$ and $O_b$. When considering the headline as a whole, the list of sentiment words is $S = (S_u \cup S_b)$. Each headline is decomposed into their respective bag of words representations in a similar combinatory manner. Let the unigram BOW representation of a headline be $d_u$ and likewise for bigram be $d_b$. The final BOW representation in this case would be $d = (d_u \cup d_b)$. The two sets are entirely distinct and will not interfere with one another, as it is guaranteed that no sentiment words from $S_u$ will also be in $S_b$, and consequently no bigram $j_b \in S_b$ will exist in $O_u$. This means that bigrams will have no associated value with respect to unigrams, leaving $\widehat p_i$ untouched. The same is true of the set of unigrams with respect to bigrams. Thus, the resultant value is an accurate reflection of the sentiment of both unigrams and bigrams.
+
+For comparison purposes, I also examine the out of sample headlines with respect to two baseline dictionaries: the Loughran McDohanald lexicon and the Harvard IV lexicon. The portfolio construction strategy is similar to that of SESTM, where the headlines on day $t$ are examined, and the calculated sentiment values are used to form 50 positive and 50 negative stocks.
 %TODO: say why 9 to 9 and not 9.30 (which is market open)
 
 

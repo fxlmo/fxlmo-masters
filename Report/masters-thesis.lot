@@ -1,18 +1,20 @@
-\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
-\babel@toc {english}{}
+\babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Model configurations}}{14}{table.caption.14}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Model configurations (bigrams)}}{17}{table.caption.17}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Resultant output from example headlines\relax }}{16}{table.caption.15}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Model configurations}}{18}{table.caption.18}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Model configurations (bigrams)}}{20}{table.caption.21}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Performance of Daily News Sentiment Portfolios one day ahead\relax }}{20}{table.caption.19}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Performance of Daily News Sentiment Portfolios one day ahead, ignoring headlines dated after January 2020\relax }}{22}{table.caption.21}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Day ahead performance different configurations}}{22}{table.caption.22}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Performance of Daily News Sentiment Portfolios day $t-1$ to day $t+1$\relax }}{23}{table.caption.23}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Performance of Daily News Sentiment Portfolios one day ahead\relax }}{24}{table.caption.24}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Performance of daily news sentiment portfolios one day ahead, ignoring headlines dated after January 2020\relax }}{26}{table.caption.26}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Day ahead performance with bigrams}}{27}{table.caption.27}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Performance of Daily News Sentiment Portfolios day $t-1$ to day $t+1$\relax }}{28}{table.caption.28}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Daily portfolio comparison}}{30}{table.caption.31}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Table showing regression of each technique on each other\relax }}{30}{table.caption.32}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {A.1}{\ignorespaces Speedup for each optimisation\relax }}{38}{table.caption.39}%
 \addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {table}{\numberline {C.1}{\ignorespaces Sentiment word list for unigrams}}{30}{table.caption.26}%
-\contentsline {table}{\numberline {C.2}{\ignorespaces Sentiment word list for bigrams}}{31}{table.caption.27}%
+\contentsline {table}{\numberline {B.1}{\ignorespaces Sentiment word list for unigrams}}{41}{table.caption.40}%
+\contentsline {table}{\numberline {B.2}{\ignorespaces Sentiment word list for bigrams}}{42}{table.caption.41}%
