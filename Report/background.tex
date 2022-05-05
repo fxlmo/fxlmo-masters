@@ -28,7 +28,7 @@ The fundamental concept of sentiment analysis revolves around investigating a pi
 
 Certain words that may have no meaning at all in one context, may have significant sentiment in another, particularly in the field of finance, where jargon dominates text. \textcite{lm-dict} conducted an investigation into the use of standard lexicons for analysing 10-K filing reports, which are comprehensive reports filed by companies about their financial performance. They discovered that almost 75\% of negative words found in the filings based on the H4N file were not typically negative in a financial context. For example, `liability' is a negatively charged word in a standard context, while it carries no tone at all in the context of the filings. Some words were found to have strong links to certain industry specific sectors, meaning they had no relevance without the context of a specific industry sector. Loughran and McDonald created their own lexicon based on these results called the Loughran McDonald dictionary specifically for the purpose of classifying 10-k filings. They find that there is a high misclassification rate when using these generic lexicons, proving lexicon based methods work far better if it is bespoke for the topic. 
 
-There are many difficulties faced with creating a dictionary of this sort, as language is often a subjective entity, leading to conflicting opinions in assigning tone to a specific word. Furthermore, the context within which a word is used can drastically change the intended sentiment of a word. For example, the word `great' is naturally a very positive word, however, if used in a sarcastic manner (e.g. `It's so great that my flight is delayed!') the sentiment conveyed can be inverted entirely. For this reason, simply calculating the sentiment of a piece of text on a word by word level can give an incorrect estimate. Additionally, sentiment analysis is extemely reliant on sufficiently labelled data and lack of this data is a significant obstacle in the field \parencite{madhoushi2015sentiment}.
+There are many difficulties faced with creating a dictionary of this sort, as language is often a subjective entity, leading to conflicting opinions in assigning tone to a specific word. Furthermore, the context within which a word is used can drastically change the intended sentiment of a word. For example, the word `great' is naturally a very positive word, however, if used in a sarcastic manner (e.g. `It's so great that my flight is delayed!') the sentiment conveyed can be inverted entirely. For this reason, simply calculating the sentiment of a piece of text on a word by word level can give an incorrect estimate. Additionally, sentiment analysis is reliant on sufficiently labelled data and lack of this data is a significant obstacle in the field \parencite{madhoushi2015sentiment}.
 
 \subsubsection{Usage}
 Usage of these lexicons can vary greatly, with some simply summing the count of positive words and subtracting the count of negative words to end up with an overall word count leaning either positively or negatively. However, this is a very rudimentary method and can be augmented with more complex models. Loughran and McDonald themselves suggest using Term Frequency Inverse Document Frequency (TF-IDF) as a method to weight the word counts. TF-IDF is one of the most popular term weighting schemes, and it therefore makes sense to augment these strategies with this weighting.
@@ -62,7 +62,7 @@ Lexicon based approaches to sentiment analysis historically consist of a simple 
 \section{Sentiment Extraction via Screening and Topic Modelling}
 Sentiment Extraction via Screening and topic model (SESTM) is a novel text mining algorithm that makes use of a teaching signal developed by \textcite{sestm}. It is based on a similar method proposed by \textcite{jegadeesh2013word}, utilising realised stock returns as a teaching signal to develop a model of sentiment words in maximally positive or negative arguments in order to predict the sentiment of out of sample headlines.
 
-To begin, we assume that each headline has some sentiment score $p_i \in [0,1]$, with $p_i = 1$ being a headline with maximum positive sentiment, and $p_i = 0$ maximally negative. Our challenge is to model the distribution of returns of a headline $y_i$ given the sentiment of the headline $p_i$. Thus we have assumed:
+To begin, we assume that each headline has some sentiment score $p_i \in [0,1]$, with $p_i = 1$ being a headline with maximum positive sentiment, and $p_i = 0$ maximally negative. Our challenge is to model the distribution of returns of a headline $y_i$ given the sentiment of the headline $p_i$. Thus, we have assumed:
 
 \begin{equation}
 \mathbb{P}(\text{sgn}(y_i) = 1) = g(p_i) \text{, for a monotone increasing function } g(\cdot)
@@ -71,7 +71,7 @@ To begin, we assume that each headline has some sentiment score $p_i \in [0,1]$,
 \noindent
 where sgn($x$) returns $1$ if $x > 0$ and $-1$ otherwise. This assumption simply states that as sentiment score increases, the probability a headline has of returning positive returns also increases.
 
-Next, we observe the distribution of word counts in an headline. We assume a vocabulary has partition
+Next, we observe the distribution of word counts in a headline. We assume a vocabulary has partition
 
 \begin{equation}
 \{1,2,\dots,m\} = S \cup N
@@ -98,7 +98,7 @@ F = \frac{1}{2}(O_+ + O_-), \quad T= \frac{1}{2}(O_+ - O_-)
 
 \subsection{Screening for sentiment charged words}
 \label{screen-sentiment}
-The first step in this algorithm is to screen for sentiment words in a collection of headlines, since sentiment neutral words are a nuidance and contribute to noise. This strategy isolates the sentiment charged words and uses these alone to calculate sentiment. This is achieved by using a supervised approach with the realised returns of an associated stock, under the assumption that if a word appears in more headlines that result in positive returns than those with negative returns, the word carries positive sentiment. Some notation will be introduced here to facilitate the discussion and explanation of the algorithm.
+The first step in this algorithm is to screen for sentiment words in a collection of headlines, since sentiment neutral words are a nuisance and contribute to noise. This strategy isolates the sentiment charged words and uses these alone to calculate sentiment. This is achieved by using a supervised approach with the realised returns of an associated stock, under the assumption that if a word appears in more headlines that result in positive returns than those with negative returns, the word carries positive sentiment. Some notation will be introduced here to facilitate the discussion and explanation of the algorithm.
 \begin{itemize}
       \item The sample is defined as $n$ headlines producing a dictionary of $m$ words.
       \item The word count of headline $i$ is recorded in vector $d_i$
@@ -113,7 +113,7 @@ f_j = \frac{\text{count of word } j \text{ in headline with } sgn(y) = +1}{\text
 \end{equation}
 
 \noindent
-Here, $sgn(y)$ is simply the sign of the difference in tagged returns of an headline. Let $y$ be the tagged return of an headline:
+Here, $sgn(y)$ is simply the sign of the difference in tagged returns of a headline. Let $y$ be the tagged return of a headline:
 
 \begin{equation}
 sgn(y) = \left\{ \begin{matrix}
@@ -123,7 +123,7 @@ sgn(y) = \left\{ \begin{matrix}
 \end{equation}
 
 \noindent
-If an headline is released on day $t$ (specifically, between 4pm of day $t-1$ and 4pm of day $t$), the headline is tagged with the returns of the associated firm from day $t-1$ to $t+1$ (specifically market close on day $t-2$ to close on day $t+1$). Naturally, higher values of $f_j$ indicate that word $j$ appears in a higher proportion of positively tagged headlines.
+If a headline is released on day $t$ (specifically, between 4pm of day $t-1$ and 4pm of day $t$), the headline is tagged with the returns of the associated firm from day $t-1$ to $t+1$ (specifically market close on day $t-2$ to close on day $t+1$). Naturally, higher values of $f_j$ indicate that word $j$ appears in a higher proportion of positively tagged headlines.
 
 Next, we calculate the positive and negative thresholds for $f_j$. We define $\hat \pi$ to be the fraction of headlines that have $sgn(y) = +1$. These are headlines that are tagged with positive returns. In practice, as the sample size increases, $\hat \pi$ tends towards $0.5$. For sentiment neutral words, it is expected that $f_j \approx \hat \pi$ with some variance either side. Therefore, two thresholds are set ($\alpha_+$ and $\alpha_-$) such that any word with $f_j \ge \hat \pi + \alpha_+$ is determined to be sentiment positive, and the inverse for $f_j \le \hat \pi - \alpha_-$. This filtering technique accepts words that are further away from the expected average sentiment, meaning only those words with non-neutral sentiment are included. To ensure that words appearing infrequently do not skew sentiment values significantly (for example a word appearing in exactly one headline that is maximally positive ending up with $f_j = 1$), we introduce a third parameter $\kappa$, restricting words that appear in fewer than $\kappa$ headlines. The number of headlines in which word $j$ appears is defined as $k_j$. The set of sentiment charged words is therefore defined by:
 
@@ -136,7 +136,7 @@ The three parameters introduced here ($\alpha_+, \alpha_-, \kappa$) are hyperpar
 
 \subsection{Learning Sentiment Topics}
 \label{sub:learn-sentiment}
-As the wordlist $S$ has been calculated, we can now fit a two-topic model to each of the sentiment-charged counts. We introduce matrix $O = [O_+,O_-]$ that determines the expected probability of sentiment charged words in each headline using a supervised learning approach. The teaching signal in this case is the realised three day returns of the associated firm for each headline.
+As the wordlist $S$ has been calculated, we can now fit a two-topic model to each of the sentiment-charged counts. We introduce matrix $O = [O_+,O_-]$ that determines the expected probability of sentiment charged words in each headline using a supervised learning approach. The teaching signal in this case is the realised three-day returns of the associated firm for each headline.
 
 In the model, $p_i$ is the headline's sentiment score, described by:
 
@@ -146,7 +146,7 @@ p_i = \frac{\text{rank of } y_i \text{ in } \{y_l\}_{l=1}^n}{n}
 \end{equation}
 
 \noindent
-where the return of a headline is represented by $y$, and headlines are ranked in ascending order (meaning an headline with the highest returns would have $p_i$ of 1). More concretely, the returns are calculated as discussed above, and represented as a percentage. Let the price of the associated firm on day t be $y_t$, the three day returns would be calculated as $y_{t+1}/y_{t-1} - 1$. As before, day $t-1$ refers to market close on day $t-2$ and day $t+1$ market close on day $t+1$.
+where the return of a headline is represented by $y$, and headlines are ranked in ascending order (meaning a headline with the highest returns would have $p_i$ of 1). More concretely, the returns are calculated as discussed above, and represented as a percentage. Let the price of the associated firm on day t be $y_t$, the three-day returns would be calculated as $y_{t+1}/y_{t-1} - 1$. As before, day $t-1$ refers to market close on day $t-2$ and day $t+1$ market close on day $t+1$.
 
 Once this value is calculated, let $h_i = d_{[S],i}/s_i$ denote the $|S| \times 1$ vector of (sentiment charged) word frequencies for headline $i$. Using model \ref{multinom}, we know that the expected distribution of these sentiment word frequencies can be modelled as:
 
@@ -239,7 +239,7 @@ Of course, these simple formulae neglect transaction fees that can apply when co
 
 Once the portfolio has been constructed, the weighting for each stock must be considered. Each portfolio will have a value, which is the amount of money invested into it, and each stock will in turn get an investment that is a percentage of this overall value. There are three major strategies that can be used to construct a portfolio: equal weighting, price weighting, and value weighting. Each strategy has its own unique set of advantages and disadvantages.
 
-The equal weighted is perhaps the most simple simple: if a portfolio is comprised of $n$ stocks and has some investment $v$, each stock has $v/n$ invested into it. This strategy glosses over differences in stock size or price.
+The equal weighted is perhaps the simplest of these strategies: if a portfolio is comprised of $n$ stocks and has some investment $v$, each stock has $v/n$ invested into it. This strategy glosses over differences in stock size or price.
 
 Price weighted portfolios assign much more money to stocks with higher value associated to them. This can be calculated in a number of ways, but the way we calculate this is if stock $s_i$ in portfolio $P = [s_1, \dots, s_n]$ has market value $P_{i,t}$ at time $t$, the weight of stock $s_i$ would be:
 
@@ -256,14 +256,14 @@ Finally, value weighted portfolios combine both the price of the stock with the 
 w_{i,t} = \frac{P_{i,t} \times s_o}{\sum_{n}^1 P_{n,t}}
 \end{equation}
 
-Equal weighted stocks more closely resemble hedge funds, as well as being the case that smaller companies are able to more quickly encapsulate market share and investor interest. Equal weighted investments ensure a portfolio has a higher representation of smaller stocks, at the higher risk of the stock failing. Conversely, value weighted portfolios tend to be safer, as they prioritise larger companies that are more stable. The downside to utilising this method is that the large percentage increases observed in smaller stocks will have less effect, and therefore some profit can be lost. Price weighted construction lies somewhere in the middle of the two, being relatively simple to construct, as with equal weighting, but with slight consideration to the price of a stock. The downside of this constructon is that the weights assigned are somewhat arbitrary as the price of a stock can fluctuate greatly.
+Equal weighted stocks more closely resemble hedge funds, as well as being the case that smaller companies are able to more quickly encapsulate market share and investor interest. Equal weighted investments ensure a portfolio has a higher representation of smaller stocks, at the higher risk of the stock failing. Conversely, value weighted portfolios tend to be safer, as they prioritise larger companies that are more stable. The downside to utilising this method is that the large percentage increases observed in smaller stocks will have less effect, and therefore some profit can be lost. Price weighted construction lies somewhere in the middle of the two, being relatively simple to construct, as with equal weighting, but with slight consideration to the price of a stock. The downside of this construction is that the weights assigned are somewhat arbitrary as the price of a stock can fluctuate greatly.
 
 \subsection{Evaluating a portfolio}
 To successfully determine the success of a portfolio, it is not always as simple as observing the profit alone. While this is a good indicator of the potential returns that could be gleaned from a given portfolio or investment method, it is important to consider external factors and risks that may be involved. The following methods are used to provide more insight into an investment method.
 
 \subsubsection{Sharpe Ratio}
 \label{ssub:sharpe-ratio}
-William Sharpe created the sharpe ratio in 1966 and is one of the most referenced comparison of risk versus return in finance \parencite{sharpe-ratio}. The formula for this ratio is exceedingly simple --- one of the key factors in its wide usage --- and is as follows:
+William Sharpe created the Sharpe ratio in 1966 and is one of the most referenced comparison of risk versus return in finance \parencite{sharpe-ratio}. The formula for this ratio is exceedingly simple --- one of the key factors in its wide usage --- and is as follows:
 
 \begin{equation*}
 S(x) = \frac{r_x - R_f}{\sigma(r_x)}
@@ -289,7 +289,7 @@ where $ER_i$ is the expected return of the investment, $R_f$ is the risk free ra
 ER_i = R_f + \beta_1(ER_m -R_f) + \beta_2 (SMB) + \beta_3(HML) + \alpha
 \end{equation*}
 
-The values for SMB and HML are available from French's website \parencite{french_2022}, and can be collected for daily, monthly, or yearly returns. Computing this model on a series of returns from a portfolio gives useful information on the nature of the returns, since the model explains part of the returns. The values for the $\beta$s detail the exposure to exposure to each of the risk factors while the $\alpha$, or the intercept, refers to the amount that a portfolio outperformed the expectations of the FF3 model. This alpha is representative of the amount of private or new information that is external from the market and is utilised to construct the portfolio. This means that more simplistic methods of selecting portfolios will not have any private information and therefore the intercept will be much close to zero while a more complicated model will have a larger intercept as simple methods have profits that can be explained by these risk factors.
+The values for SMB and HML are available from French's website \parencite{french_2022}, and can be collected for daily, monthly, or yearly returns. Computing this model on a series of returns from a portfolio gives useful information on the nature of the returns, since the model explains part of the returns. The values for the $\beta$s detail the exposure to each of the risk factors while the $\alpha$, or the intercept, refers to the amount that a portfolio outperformed the expectations of the FF3 model. This alpha is representative of the amount of private or new information that is external from the market and is utilised to construct the portfolio. This means that more simplistic methods of selecting portfolios will not have any private information and therefore the intercept will be much close to zero while a more complicated model will have a larger intercept as simple methods have profits that can be explained by these risk factors.
 
 This model was then revisited by Fama and French in 2015 where they observed two additional factors: robust minus weak (RMW) and conservative minus aggressive (CMA) \parencite{ff5}. RMW corresponds to the profitability of an asset, in that it is the difference between returns of robust or high and weak or low operating profitability. CMA corresponds to the investment factor, and is the difference between returns of conservatively investing firms versus aggressively investing firms, giving the updated formula:
 
