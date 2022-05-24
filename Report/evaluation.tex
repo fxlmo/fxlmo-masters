@@ -65,20 +65,20 @@ Several of the high frequency unigrams do not appear in the high frequency bigra
 
 \begin{table}[!ht]
 \begin{center}
-\begin{tabular}{lccccccc}
+\begin{tabular}{lcccccc}
       \toprule
-      & Sharpe &  Average & Daily & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
-      \cmidrule(lr){5-6}
-      \cmidrule(lr){7-8}
+      & Sharpe &  Average & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
+      \cmidrule(lr){4-5}
+      \cmidrule(lr){6-7}
       % \cmidrule(lr){9-10}
-      Formation & Ratio & Return & Turnover & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
+      Formation & Ratio & Return & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
       \midrule
-      EW LS & 0.84 & 9.23 & & 5.59 & 4.11\% & 5.57 & 4.16\% \\
-      EW L & 0.69 & 9.75 & & 6.56 & 21.62\% & 5.86 & 23.0\% \\
-      EW S & -0.09 & -0.53 & & -1.66 & 25.71\% & -0.98 & 26.68\% \\
-      VW LS & 0.56 & 6.31 & & 4.73 & 0.83\% & 7.16 & 4.58\% \\
-      VW L & 0.86 & 10.47 & & 6.51 & 34.3\% & 7.55 & 35.16\% \\
-      VW S & -0.38 & -4.16 & & -2.48 & 32.54\% & -1.08 & 34.08\% \\
+      EW LS & 0.84 & 9.23 & 5.59 & 4.11\% & 5.57 & 4.16\% \\
+      EW L & 0.69 & 9.75 & 6.56 & 21.62\% & 5.86 & 23.0\% \\
+      EW S & -0.09 & -0.53 & -1.66 & 25.71\% & -0.98 & 26.68\% \\
+      VW LS & 0.56 & 6.31 & 4.73 & 0.83\% & 7.16 & 4.58\% \\
+      VW L & 0.86 & 10.47 & 6.51 & 34.3\% & 7.55 & 35.16\% \\
+      VW S & -0.38 & -4.16 & -2.48 & 32.54\% & -1.08 & 34.08\% \\
       \bottomrule
 \end{tabular}
 \caption{Performance of Daily News Sentiment Portfolios one day ahead}
@@ -88,7 +88,7 @@ Several of the high frequency unigrams do not appear in the high frequency bigra
 
 Using the headlines that were saved for out of sample testing, a portfolio is constructed for each day. On average, 358 firms have articles linked to them on a given day, and of these, almost three quarters of these firms have headlines containing one or more sentiment words (are not marked neutral by the model). According to the constraints ($\widehat p_i < 0.5$ for a stock to be bought, and vice versa for a stock to be sold), there are some days where less than 100 stocks form the portfolio, in which case we trade with the largest value possible. On average, the long side trades with 49.5 stocks, while the short side has 48, so the model trades at very close to 100 stocks the majority of the time.
 
-Table \ref{portfolio-performance} describes the performance of the constructed portfolios. The long-short portfolio is a zero-net-investment portfolio, which is a theoretical portfolio that requires zero investment, as it buys the same value of stocks as it sells \parencite{zero-net}. The portfolio is theoretical as a true zero-cost investment is impossible in practice for a number of reasons, one of which being that to sell a stock and profit from the decline, there is collateral from the loan from the broker. However, for the purposes of the following experiments, it is sufficient. The two investment methods (equal and value weighted) are split up into the long-short combined portfolio (L-S), and the long (L) and short (S) legs are also displayed separately for comparison purposes. The daily turnover section displays the average turnover each day, which would be 100\% as the profit is liquidated at the end of each day, but some stocks are retained the following day. A turnover of 90\% (as in VW L) implies that on average 1 in 10 stocks are retained the following day. This could be due to headlines or news articles that are concerning the same events (stale news), or repeat sentiment headlines as a story unfolds over a number of days.
+Table \ref{portfolio-performance} describes the performance of the constructed portfolios. The long-short portfolio is a zero-net-investment portfolio, which is a theoretical portfolio that requires zero investment, as it buys the same value of stocks as it sells \parencite{zero-net}. The portfolio is theoretical as a true zero-cost investment is impossible in practice for a number of reasons, one of which being that to sell a stock and profit from the decline, there is collateral from the loan from the broker. However, for the purposes of the following experiments, it is sufficient. The two investment methods (equal and value weighted) are split up into the long-short combined portfolio (L-S), and the long (L) and short (S) legs are also displayed separately for comparison purposes.
 
 The Sharpe ratio refers to the calculated annualised sharpe ratio and this reflects the ratio of profit versus risk. Sharpe ratios are annualised by multiplying the daily sharpe ratio (shown in \ref{ssub:sharpe-ratio}) by $\sqrt{252}$ as this is the number of trading days in a year, and will give a clearer image of the risk involved in the potential profit.
 
@@ -137,26 +137,26 @@ The two short formations perform very similarly, with both making slight losses.
 \begin{center}
 \begin{tabular}{lccccccc}
       \toprule
-      & Sharpe &  Average & Daily & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
-      \cmidrule(lr){5-6}
-      \cmidrule(lr){7-8}
-      Formation & Ratio & Return & Turnover & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
+      & Sharpe &  Average & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
+      \cmidrule(lr){4-5}
+      \cmidrule(lr){6-7}
+      Formation & Ratio & Return & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
       \midrule
-      EW LS & 0.84  & 9.23 & & 5.59 & 4.11\% & 5.57 & 4.16\% \\
-      EW L  & 0.69  & 9.75 & & 6.56 & 21.62\% & 5.86 & 23.0\% \\
-      EW S  & -0.09 & -0.53 & & -1.66 & 25.71\% & -0.98 & 26.68\% \\
-      VW LS & 0.56  & 6.31 & & 4.73 & 0.83\% & 7.16 & 4.58\% \\
-      VW L  & 0.86  & 10.47 & & 6.51 & 34.3\% & 7.55 & 35.16\% \\
-      VW S  & -0.38 & -4.16 & & -2.48 & 32.54\% & -1.08 & 34.08\% \\
+      EW LS & 0.84  & 9.23 & 5.59 & 4.11\% & 5.57 & 4.16\% \\
+      EW L  & 0.69  & 9.75 & 6.56 & 21.62\% & 5.86 & 23.0\% \\
+      EW S  & -0.09 & -0.53 & -1.66 & 25.71\% & -0.98 & 26.68\% \\
+      VW LS & 0.56  & 6.31 & 4.73 & 0.83\% & 7.16 & 4.58\% \\
+      VW L  & 0.86  & 10.47 & 6.51 & 34.3\% & 7.55 & 35.16\% \\
+      VW S  & -0.38 & -4.16 & -2.48 & 32.54\% & -1.08 & 34.08\% \\
       \midrule
-      \multicolumn{8}{c}{Excluding market crash} \\
+      \multicolumn{7}{c}{Excluding market crash} \\
       \midrule
-      EW LS & 0.66  & 6.51 & & 5.52 & 2.24\% & 4.16 & 4.51\% \\
-      EW L  & 0.64  & 5.46 & & 1.95 & 9.67\% & 0.58 & 12.97\% \\
-      EW S  & 0.03  & 1.05 & & 2.76 & 16.16\% & 2.77 & 16.96\% \\
-      VW LS & 0.99  & 7.61 & & 6.46 & 0.81\% & 6.67 & 0.9\% \\
-      VW L  & 1.52  & 10.98 & & 7.95 & 14.51\% & 7.84 & 14.59\% \\
-      VW S  & -0.59 & -3.37 & & -2.3 & 17.95\% & -1.98 & 18.21\% \\
+      EW LS & 0.66  & 6.51 & 5.52 & 2.24\% & 4.16 & 4.51\% \\
+      EW L  & 0.64  & 5.46 & 1.95 & 9.67\% & 0.58 & 12.97\% \\
+      EW S  & 0.03  & 1.05 & 2.76 & 16.16\% & 2.77 & 16.96\% \\
+      VW LS & 0.99  & 7.61 & 6.46 & 0.81\% & 6.67 & 0.9\% \\
+      VW L  & 1.52  & 10.98 & 7.95 & 14.51\% & 7.84 & 14.59\% \\
+      VW S  & -0.59 & -3.37 & -2.3 & 17.95\% & -1.98 & 18.21\% \\
       \bottomrule
 \end{tabular}
 \caption{Performance of daily news sentiment portfolios one day ahead, ignoring headlines dated after January 2020}
@@ -170,27 +170,27 @@ For closer inspection of the model's predictive ability, table \ref{tab:portfoli
 \begin{center}
 \begin{tabular}{l|cc|ccccccc}
       \toprule
-      & Baseline & Baseline& Sharpe &  Average & Daily & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
-      \cmidrule(lr){7-8}
-      \cmidrule(lr){9-10}
+      & Baseline & Baseline& Sharpe &  Average & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
+      \cmidrule(lr){6-7}
+      \cmidrule(lr){8-9}
       % \cmidrule(lr){9-10}
-      Formation & Sharpe & Returns & Ratio & Return & Turnover & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
+      Formation & Sharpe & Returns & Ratio & Return &  $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
       \midrule
- EW LS & 0.84  & 9.23 & 1.75 & 20.69 & & 18.19 & 8.87\% & 17.71 & 8.98\% \\
- EW L  & 0.69  & 9.75 & 1.29 & 17.84 & & 14.55 & 18.81\% & 14.02 & 19.93\% \\
- EW S  & -0.09 & -0.53 & 0.15 & 2.85 & & 2.95 & 34.48\% & 3.0 & 35.2\% \\
- VW LS & 0.56  & 6.31 & 1.62 & 15.45 & & 12.45 & 5.12\% & 13.41 & 6.31\% \\
- VW L  & 0.86  & 10.47 & 1.01 & 11.32 & & 8.21 & 32.42\% & 9.13 & 33.53\% \\
- VW S  & -0.38 & -4.16 & 0.27 & 4.13 & & 3.55 & 30.11\% & 3.58 & 31.48\% \\
+ EW LS & 0.84  & 9.23 & 1.75 & 20.69 & 18.19 & 8.87\% & 17.71 & 8.98\% \\
+ EW L  & 0.69  & 9.75 & 1.29 & 17.84 & 14.55 & 18.81\% & 14.02 & 19.93\% \\
+ EW S  & -0.09 & -0.53 & 0.15 & 2.85 & 2.95 & 34.48\% & 3.0 & 35.2\% \\
+ VW LS & 0.56  & 6.31 & 1.62 & 15.45 & 12.45 & 5.12\% & 13.41 & 6.31\% \\
+ VW L  & 0.86  & 10.47 & 1.01 & 11.32 & 8.21 & 32.42\% & 9.13 & 33.53\% \\
+ VW S  & -0.38 & -4.16 & 0.27 & 4.13 & 3.55 & 30.11\% & 3.58 & 31.48\% \\
  \midrule
- \multicolumn{10}{c}{Excluding market crash} \\
+ \multicolumn{9}{c}{Excluding market crash} \\
  \midrule
- EW LS & 0.66  & 6.51 & 0.85 & 8.26 & & 7.15 & 2.49\% & 6.09 & 3.77\% \\
- EW L  & 0.64  & 5.46 & 1.12 & 9.19 & & 5.86 & 9.2\% & 4.79 & 11.25\% \\
- EW S  & 0.03  & 1.05 & -0.21 & -0.93 & & 0.47 & 16.02\% & 0.49 & 16.59\% \\
- VW LS & 0.99  & 7.61 & 1.53 & 11.16 & & 10.54 & 1.43\% & 10.78 & 1.54\% \\
- VW L  & 1.52  & 10.98 & 1.35 & 9.93 & & 7.07 & 17.33\% & 7.15 & 17.46\% \\
- VW S  & -0.59 & -3.37 & 0.06 & 1.23 & & 2.66 & 21.48\% & 2.81 & 21.59\% \\
+ EW LS & 0.66  & 6.51 & 0.85 & 8.26 & 7.15 & 2.49\% & 6.09 & 3.77\% \\
+ EW L  & 0.64  & 5.46 & 1.12 & 9.19 & 5.86 & 9.2\% & 4.79 & 11.25\% \\
+ EW S  & 0.03  & 1.05 & -0.21 & -0.93 & 0.47 & 16.02\% & 0.49 & 16.59\% \\
+ VW LS & 0.99  & 7.61 & 1.53 & 11.16 & 10.54 & 1.43\% & 10.78 & 1.54\% \\
+ VW L  & 1.52  & 10.98 & 1.35 & 9.93 & 7.07 & 17.33\% & 7.15 & 17.46\% \\
+ VW S  & -0.59 & -3.37 & 0.06 & 1.23 & 2.66 & 21.48\% & 2.81 & 21.59\% \\
       \bottomrule
 \end{tabular}
 \caption[Day ahead performance with bigrams]{Performance of daily news sentiment portfolios using bigrams alongside unigrams. Baseline values are those achieved by unigrams alone}
@@ -210,35 +210,35 @@ In the previous sections, we explore the relationship between the sentiment scor
 
 \begin{table}[!t]
 \begin{center}
-\begin{tabular}{lccccccc}
+\begin{tabular}{lcccccc}
       \toprule
-      & Sharpe &  Average & Daily & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
-      \cmidrule(lr){5-6}
-      \cmidrule(lr){7-8}
+      & Sharpe &  Average & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
+      \cmidrule(lr){4-5}
+      \cmidrule(lr){6-7}
       % \cmidrule(lr){9-10}
-      Formation & Ratio & Return & Turnover & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
+      Formation & Ratio & Return &  $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
       \midrule
-      \multicolumn{8}{c}{Day $t-1$} \\
-EW LS & 15.48 & 210.11 & & 207.8 & 1.09\% & 207.19 & 4.93\% \\
-EW L & 7.83 & 122.42 & & 120.91 & 21.43\% & 120.44 & 23.06\% \\
-EW S & 5.87 & 87.7 & & 86.2 & 28.81\% & 86.05 & 29.01\% \\
-VW LS & 9.27 & 110.04 & & 107.9 & 1.22\% & 108.69 & 3.74\% \\
-VW L & 4.18 & 55.35 & & 52.18 & 34.77\% & 52.99 & 36.55\% \\
-VW S & 4.55 & 54.69 & & 55.02 & 31.73\% & 54.99 & 31.75\% \\
-      \multicolumn{8}{c}{Day $t+0$} \\
-EW LS & 15.67 & 234.84 & & 233.93 & 2.46\% & 233.89 & 3.05\% \\
-EW L & 7.57 & 134.7 & & 134.21 & 10.26\% & 134.64 & 11.18\% \\
-EW S & 6.21 & 100.15 & & 99.03 & 21.85\% & 98.56 & 22.02\% \\
-VW LS & 12.51 & 139.79 & & 139.08 & 1.39\% & 139.21 & 1.62\% \\
-VW L & 3.77 & 53.24 & & 51.09 & 15.87\% & 51.56 & 17.01\% \\
-VW S & 6.87 & 86.55 & & 87.3 & 24.3\% & 86.96 & 24.89\% \\
-      \multicolumn{8}{c}{Day $t+1$} \\
-EW LS & 0.84 & 9.23 & & 5.59 & 4.11\% & 5.57 & 4.16\% \\
-EW L & 0.69 & 9.75 & & 6.56 & 21.62\% & 5.86 & 23.0\% \\
-EW S & -0.09 & -0.53 & & -1.66 & 25.71\% & -0.98 & 26.68\% \\
-VW LS & 0.56 & 6.31 & & 4.73 & 0.83\% & 7.16 & 4.58\% \\
-VW L & 0.86 & 10.47 & & 6.51 & 34.3\% & 7.55 & 35.16\% \\
-VW S & -0.38 & -4.16 & & -2.48 & 32.54\% & -1.08 & 34.08\% \\
+      \multicolumn{7}{c}{Day $t-1$} \\
+EW LS & 15.48 & 210.11 & 207.8 & 1.09\% & 207.19 & 4.93\% \\
+EW L & 7.83 & 122.42 & 120.91 & 21.43\% & 120.44 & 23.06\% \\
+EW S & 5.87 & 87.7 &  86.2 & 28.81\% & 86.05 & 29.01\% \\
+VW LS & 9.27 & 110.04 & 107.9 & 1.22\% & 108.69 & 3.74\% \\
+VW L & 4.18 & 55.35 & 52.18 & 34.77\% & 52.99 & 36.55\% \\
+VW S & 4.55 & 54.69 & 55.02 & 31.73\% & 54.99 & 31.75\% \\
+      \multicolumn{7}{c}{Day $t+0$} \\
+EW LS & 15.67 & 234.84 & 233.93 & 2.46\% & 233.89 & 3.05\% \\
+EW L & 7.57 & 134.7 & 134.21 & 10.26\% & 134.64 & 11.18\% \\
+EW S & 6.21 & 100.15 & 99.03 & 21.85\% & 98.56 & 22.02\% \\
+VW LS & 12.51 & 139.79 & 139.08 & 1.39\% & 139.21 & 1.62\% \\
+VW L & 3.77 & 53.24 & 51.09 & 15.87\% & 51.56 & 17.01\% \\
+VW S & 6.87 & 86.55 & 87.3 & 24.3\% & 86.96 & 24.89\% \\
+      \multicolumn{7}{c}{Day $t+1$} \\
+EW LS & 0.84 & 9.23 & 5.59 & 4.11\% & 5.57 & 4.16\% \\
+EW L & 0.69 & 9.75 & 6.56 & 21.62\% & 5.86 & 23.0\% \\
+EW S & -0.09 & -0.53 & -1.66 & 25.71\% & -0.98 & 26.68\% \\
+VW LS & 0.56 & 6.31 & 4.73 & 0.83\% & 7.16 & 4.58\% \\
+VW L & 0.86 & 10.47 & 6.51 & 34.3\% & 7.55 & 35.16\% \\
+VW S & -0.38 & -4.16 & -2.48 & 32.54\% & -1.08 & 34.08\% \\
       \bottomrule
 \end{tabular}
 \caption{Performance of Daily News Sentiment Portfolios day $t-1$ to day $t+1$}
@@ -324,35 +324,35 @@ In this section, we compare the ability of SESTM against similar strategies. Sim
 
 \begin{table}[!t]
 \begin{center}
-\begin{tabular}{lccccccc}
+\begin{tabular}{lcccccc}
       \toprule
-      & Sharpe &  Average & Daily & \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
-      \cmidrule(lr){5-6}
-      \cmidrule(lr){7-8}
+      & Sharpe &  Average &  \multicolumn{2}{c}{FF3} & \multicolumn{2}{c}{FF5} \\
+      \cmidrule(lr){4-5}
+      \cmidrule(lr){6-7}
       % \cmidrule(lr){9-10}
-      Formation & Ratio & Return & Turnover & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
+      Formation & Ratio & Return &  $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
       \midrule
-      \multicolumn{8}{c}{SESTM} \\
-LS & 0.84 & 9.23 & & 5.59 & 4.11\% & 5.57 & 4.16\% \\
-LS (no-covid) & 0.66 & 6.51 & & 5.52 & 2.24\% & 4.16 & 4.51\% \\
-L & 0.69 & 9.75 & & 6.56 & 21.62\% & 5.86 & 23.0\% \\
-L (no-covid) & 0.64 & 5.46 & & 1.95 & 9.67\% & 0.58 & 12.97\% \\
-S & -0.09 & -0.53 & & -1.66 & 25.71\% & -0.98 & 26.68\% \\
-S (no-covid) & 0.03 & 1.05 & & 2.76 & 16.16\% & 2.77 & 16.9\% \\
-   \multicolumn{8}{c}{LM} \\
-LM LS & 1.42 & 13.04 & & 9.59 & 4.58\% & 9.63 & 5.32\% \\
-LM LS (no-covid) & -0.03 & 0.63 & & -1.58 & 2.58\% & -1.38 & 2.77\% \\
-LM L & 1.03 & 14.07 & & 11.72 & 22.42\% & 10.99 & 22.66\% \\
-LM L (no-covid) & 0.44 & 4.17 & & 1.28 & 27.68\% & 1.48 & 27.78\% \\
-LM S & -0.13 & -1.02 & & -2.83 & 20.29\% & -2.06 & 21.11\% \\
-LM S (no-covid) & -0.56 & -3.53 & & -3.68 & 35.68\% & -3.67 & 35.69\% \\
-   \multicolumn{8}{c}{H4} \\
-H4 LS & 1.44 & 14.26 & & 13.8 & 4.53\% & 14.34 & 4.75\% \\
-H4 LS (no-covid) & 0.07 & 1.28 & & 0.39 & 3.42\% & 0.76 & 3.85\% \\
-H4 L & 1.36 & 18.47 & & 17.67 & 21.17\% & 17.79 & 21.24\% \\
-H4 L (no-covid) & 1.11 & 8.51 & & 5.97 & 21.6\% & 6.35 & 21.98\% \\
-H4 S & -0.38 & -4.21 & & -4.56 & 22.78\% & -4.15 & 22.98\% \\
-H4 S (no-covid) & -0.99 & -7.23 & & -6.4 & 30.61\% & -6.4 & 30.65\% \\
+      \multicolumn{7}{c}{SESTM} \\
+LS & 0.84 & 9.23 & 5.59 & 4.11\% & 5.57 & 4.16\% \\
+LS (no-covid) & 0.66 & 6.51 & 5.52 & 2.24\% & 4.16 & 4.51\% \\
+L & 0.69 & 9.75 & 6.56 & 21.62\% & 5.86 & 23.0\% \\
+L (no-covid) & 0.64 & 5.46 & 1.95 & 9.67\% & 0.58 & 12.97\% \\
+S & -0.09 & -0.53 & -1.66 & 25.71\% & -0.98 & 26.68\% \\
+S (no-covid) & 0.03 & 1.05 & 2.76 & 16.16\% & 2.77 & 16.9\% \\
+   \multicolumn{7}{c}{LM} \\
+LM LS & 1.42 & 13.04 & 9.59 & 4.58\% & 9.63 & 5.32\% \\
+LM LS (no-covid) & -0.03 & 0.63 & -1.58 & 2.58\% & -1.38 & 2.77\% \\
+LM L & 1.03 & 14.07 & 11.72 & 22.42\% & 10.99 & 22.66\% \\
+LM L (no-covid) & 0.44 & 4.17  & 1.28 & 27.68\% & 1.48 & 27.78\% \\
+LM S & -0.13 & -1.02 & -2.83 & 20.29\% & -2.06 & 21.11\% \\
+LM S (no-covid) & -0.56 & -3.53 & -3.68 & 35.68\% & -3.67 & 35.69\% \\
+   \multicolumn{7}{c}{H4} \\
+H4 LS & 1.44 & 14.26 & 13.8 & 4.53\% & 14.34 & 4.75\% \\
+H4 LS (no-covid) & 0.07 & 1.28 & 0.39 & 3.42\% & 0.76 & 3.85\% \\
+H4 L & 1.36 & 18.47 & 17.67 & 21.17\% & 17.79 & 21.24\% \\
+H4 L (no-covid) & 1.11 & 8.51 & 5.97 & 21.6\% & 6.35 & 21.98\% \\
+H4 S & -0.38 & -4.21 & -4.56 & 22.78\% & -4.15 & 22.98\% \\
+H4 S (no-covid) & -0.99 & -7.23 & -6.4 & 30.61\% & -6.4 & 30.65\% \\
       \bottomrule
 
 \end{tabular}
@@ -367,30 +367,30 @@ Figure \ref{graph-returns-comparison} details the cumulative log returns for eac
 
 \begin{table}[!t]
 \begin{center}
-\begin{tabular}{lccccccccccc}
+\begin{tabular}{lcccccccccc}
       \toprule
-      & Sharpe &  Average & Daily & \multicolumn{2}{c}{FF5 + SESTM} & \multicolumn{2}{c}{FF5 + bigram} & \multicolumn{2}{c}{FF5 + LM} & \multicolumn{2}{c}{FF5 + H4}\\
-      \cmidrule(lr){5-6}
-      \cmidrule(lr){7-8}
-      \cmidrule(lr){9-10}
-      \cmidrule(lr){11-12}
-       & Ratio & Return & Turnover & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
+      & Sharpe &  Average &  \multicolumn{2}{c}{FF5 + SESTM} & \multicolumn{2}{c}{FF5 + bigram} & \multicolumn{2}{c}{FF5 + LM} & \multicolumn{2}{c}{FF5 + H4}\\
+      \cmidrule(lr){4-5}
+      \cmidrule(lr){6-7}
+      \cmidrule(lr){8-9}
+      \cmidrule(lr){10-11}
+       & Ratio & Return &  $\alpha$ & $R^2$ & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ & $\alpha$ & $R^2$ \\
       \midrule
-      \multicolumn{12}{c}{SESTM} \\
-EW & 0.84 & 9.23 & & & & -8.21 & 74.08\% & 3.29 & 6.56\% & 4.61 & 4.68\%\\
-VW & 0.56 & 6.32 & & & & -1.58 & 37.35\% & 7.22 & 4.78\% & 4.83 & 6.37\%\\
+      \multicolumn{11}{c}{SESTM} \\
+EW & 0.84 & 9.23 & & & -8.21 & 74.08\% & 3.29 & 6.56\% & 4.61 & 4.68\%\\
+VW & 0.56 & 6.32 & & & -1.58 & 37.35\% & 7.22 & 4.78\% & 4.83 & 6.37\%\\
 % VW & 0.66 & 6.51 & & \\
-   \multicolumn{12}{c}{SESTM w/ bigrams} \\
-EW & 1.75 & 20.69 & & 12.49 & 75.28\% & & & 14.81 & 12.06\% & 16.7 & 9.44\%\\
-VW & 1.62 & 15.45 & & 9.63 & 38.49\% & & & 13.63 & 10.33\% & 12.56 & 6.56\%\\
+   \multicolumn{11}{c}{SESTM w/ bigrams} \\
+EW & 1.75 & 20.69 & 12.49 & 75.28\% & & & 14.81 & 12.06\% & 16.7 & 9.44\%\\
+VW & 1.62 & 15.45 & 9.63 & 38.49\% & & & 13.63 & 10.33\% & 12.56 & 6.56\%\\
 % VW LS & 0.9 & 8.09 & & \\
-   \multicolumn{12}{c}{LM} \\
-EW & 1.42 & 13.04 & & 11.15 & 13.92\% & 9.42 & 14.7\% & & & 9.08 & 17.63\%\\
-VW & 0.18 & 2.46 & & -1.48 & 10.96\% & -4.15 & 14.61\% & & & -0.45 & 10.94\%\\
+   \multicolumn{11}{c}{LM} \\
+EW & 1.42 & 13.04 & 11.15 & 13.92\% & 9.42 & 14.7\% & & & 9.08 & 17.63\%\\
+VW & 0.18 & 2.46 & -1.48 & 10.96\% & -4.15 & 14.61\% & & & -0.45 & 10.94\%\\
 % VW & -0.03 & 0.63 & & \\
-   \multicolumn{12}{c}{H4} \\
-EW & 1.44 & 14.26 & & 11.91 & 3.11\% & 11.23 & 3.07\% & 8.8 & 9.11\% & &  \\
-VW & 1.57 & 15.13 & & 14.92 & 3.28\% & 14.44 & 1.73\% & 15.79 & 1.62\% & &  \\
+   \multicolumn{11}{c}{H4} \\
+EW & 1.44 & 14.26 & 11.91 & 3.11\% & 11.23 & 3.07\% & 8.8 & 9.11\% & &  \\
+VW & 1.57 & 15.13 & 14.92 & 3.28\% & 14.44 & 1.73\% & 15.79 & 1.62\% & &  \\
 % VW & 1.44 & 14.26 & & \\
       \bottomrule
 \end{tabular}

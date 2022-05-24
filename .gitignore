@@ -11,3 +11,11 @@ Report/*.lof
 Report/*.bbl
 Report/*.blg
 Report/*.out
+data/*
+Report/data/*
+prev-data/*
+kaggle/data/*
+kaggle/processed-data-raw/*
+kaggle/processed-data/*
+kaggle/outstanding-stock-info/*
+sestm/articles-pulled/*
